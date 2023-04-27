@@ -1,7 +1,34 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using Swipepick.Angular.DataAccess;
+using Swipepick.Angular.Web.Infrastructure.Startup;
+using System;
+using System.Text;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["JwtAuth:Issuer"],
+            ValidAudience = builder.Configuration["JwtAuth:Issuer"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtAuth:Key"]))
+        };
+    });
+// Database.
+var databaseConnectionString = builder.Configuration.GetConnectionString("AppDatabase")
+            ?? throw new ArgumentNullException("ConnectionStrings:AppDatabase", "Database connection string is not initialized");
+builder.Services.AddDbContext<AppDbContext>(
+    new DbContextOptionsSetup(databaseConnectionString).Setup);
+builder.Services.AddAsyncInitializer<DatabaseInitializer>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -24,4 +51,5 @@ app.MapControllerRoute(
 
 app.MapFallbackToFile("index.html");
 
-app.Run();
+await app.InitAsync();
+await app.RunAsync();

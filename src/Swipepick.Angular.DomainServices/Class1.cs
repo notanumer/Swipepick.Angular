@@ -1,7 +1,6 @@
-﻿namespace Swipepick.Angular.DomainServices
-{
-    public class Class1
-    {
+﻿namespace Swipepick.Angular.DomainServices;
 
-    }
+public class Class1
+{
+
 }

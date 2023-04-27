@@ -132,5 +132,8 @@
       }
     }
   },
-  "defaultProject": "Swipepick.Angular.Web"
+  "defaultProject": "Swipepick.Angular.Web",
+  "cli": {
+    "analytics": false
+  }
 }
