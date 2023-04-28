@@ -2,13 +2,17 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Swipepick.Angular.DataAccess;
+using Swipepick.Angular.Infrastructure.Abstractions.Interfaces;
+using Swipepick.Angular.UseCases;
+using Swipepick.Angular.UseCases.Tests.CreateTest;
 using Swipepick.Angular.Web.Infrastructure.Startup;
 using System;
+using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Jwt.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -23,12 +27,21 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtAuth:Key"]))
         };
     });
+
+// AutoMapper.
+builder.Services.AddAutoMapper(cfg => cfg.AddMaps(Assembly.GetAssembly(typeof(TestMappingProfile))));
+
+// MediatR.
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetAssembly(typeof(CreateTestCommand))));
+
 // Database.
 var databaseConnectionString = builder.Configuration.GetConnectionString("AppDatabase")
             ?? throw new ArgumentNullException("ConnectionStrings:AppDatabase", "Database connection string is not initialized");
-builder.Services.AddDbContext<AppDbContext>(
-    new DbContextOptionsSetup(databaseConnectionString).Setup);
+builder.Services.AddDbContext<AppDbContext>(new DbContextOptionsSetup(databaseConnectionString).Setup);
 builder.Services.AddAsyncInitializer<DatabaseInitializer>();
+builder.Services.AddScoped<IAppDbContext, AppDbContext>();
+
+// Views
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -43,7 +56,8 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
