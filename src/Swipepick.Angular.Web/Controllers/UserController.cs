@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Security.Claims;
@@ -9,21 +10,12 @@ namespace Swipepick.Angular.Web.Controllers;
 [Route("api/user")]
 public class UserController : Controller
 {
-    //private readonly IUserRepository _user;
+    private readonly IMediator mediator;
 
-    //public UserController(IUserRepository userRepository)
-    //{
-    //    _user = userRepository;
-    //}
-
-    //[Authorize]
-    //[HttpPost("create-test")]
-    //public IActionResult CreateTest(TestDto test)
-    //{
-    //    var email = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
-    //    _user.AddTest(email.Value, test);
-    //    return Ok(email.Value);
-    //}
+    public UserController(IMediator mediator)
+    {
+        this.mediator = mediator;
+    }
 
     //[Authorize]
     //[HttpGet("get-tests")]
