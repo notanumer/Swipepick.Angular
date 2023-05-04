@@ -5,5 +5,7 @@ namespace Swipepick.Angular.UseCases.Users.GetUser;
 
 public record GetUserQuery : IRequest<GetUserQueryResult>
 {
-    public UserLoginDto UserLoginDto { get; init; }
+    public string Email { get; init; }
+
+    public string Password { get; init; }
 }

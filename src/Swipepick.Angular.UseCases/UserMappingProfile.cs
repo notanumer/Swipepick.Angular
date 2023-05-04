@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Swipepick.Angular.Domain;
-using Swipepick.Angular.DomainServices;
+using Swipepick.Angular.UseCases.Users.AddUser;
 
 namespace Swipepick.Angular.UseCases;
 
@@ -8,6 +8,6 @@ public class UserMappingProfile : Profile
 {
     public UserMappingProfile()
     {
-        CreateMap<UserDto, User>();
+        CreateMap<AddUserCommand, User>();
     }
 }
