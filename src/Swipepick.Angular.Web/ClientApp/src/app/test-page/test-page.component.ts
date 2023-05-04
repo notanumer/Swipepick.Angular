@@ -9,7 +9,7 @@ import {Observable, switchMap} from "rxjs";
   styleUrls: ['./test-page.component.css']
 })
 export class TestPageComponent {
-  test$: Observable<any>
+  test$: Observable<any> | undefined
 
   constructor(
     private route: ActivatedRoute,
