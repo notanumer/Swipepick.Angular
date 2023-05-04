@@ -10,6 +10,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors();
 builder.Services.AddSwaggerGen();
 // Jwt.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -55,6 +56,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 app.UseAuthentication();
 app.UseAuthorization();
 
