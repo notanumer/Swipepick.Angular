@@ -1,12 +1,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Swipepick.Angular.DataAccess;
 using Swipepick.Angular.Infrastructure.Abstractions.Interfaces;
 using Swipepick.Angular.UseCases;
 using Swipepick.Angular.UseCases.Tests.CreateTest;
 using Swipepick.Angular.Web.Infrastructure.Startup;
-using System;
 using System.Reflection;
 using System.Text;
 
@@ -59,9 +57,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller}/{action=Index}/{id?}");
+app.MapControllers();
 
 app.MapFallbackToFile("index.html");
 
