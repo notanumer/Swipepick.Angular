@@ -76,12 +76,11 @@ export class AuthPageComponent {
       return
     }
 
-
     const user: UserRegister = {
-      email: this.formLogin.value.emailRegister,
-      password: this.formLogin.value.passwordRegister,
-      name: this.formLogin.value.nameRegister,
-      lastname: this.formLogin.value.lastnameRegister
+      email: this.formRegister.value.emailRegister,
+      password: this.formRegister.value.passwordRegister,
+      name: this.formRegister.value.nameRegister,
+      lastname: this.formRegister.value.lastnameRegister
     }
 
     this.auth.register(user).subscribe((r) => {

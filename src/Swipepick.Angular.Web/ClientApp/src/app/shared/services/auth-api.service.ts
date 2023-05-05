@@ -1,10 +1,11 @@
 import {Inject, Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError, Observable, tap} from "rxjs";
 import {UserLogin, UserLoginResponse, UserRegister} from "../interfaces/auth-interfaces";
 
 @Injectable()
 export class AuthApiService {
+
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {}
 
@@ -13,7 +14,7 @@ export class AuthApiService {
   }
 
   login(user: UserLogin): Observable<any> {
-    return this.http.post(this.baseUrl + 'api/auth/login', user)
+    return this.http.post(this.baseUrl + 'api/auth/login', user  )
 
 
   }
@@ -25,6 +26,7 @@ export class AuthApiService {
   }
 
   register(user: UserRegister): Observable<any> {
+    console.log(user)
     return this.http.post(this.baseUrl + 'api/auth/register', user)
   }
 
