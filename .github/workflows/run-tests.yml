@@ -7,7 +7,7 @@ name: unit-test
 on:
   pull_request:
     branches:
-      - develop
+      - dev
       - main
       - 'release/*'
 
