@@ -44,7 +44,7 @@ public class TestController : Controller
             {
                 QueId = x.QuestionId,
                 Question = x.QuestionContent,
-                Options = test.Questions.Select(q => q.QuestionContent)
+                Options = test.Questions.Select(q => q.Answers)
             }).OrderBy(y => Guid.NewGuid());
 
         return Json(quest);
