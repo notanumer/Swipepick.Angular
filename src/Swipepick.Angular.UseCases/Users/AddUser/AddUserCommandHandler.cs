@@ -20,8 +20,8 @@ public class AddUserCommandHandler : IRequestHandler<AddUserCommand>
 
     public async Task Handle(AddUserCommand request, CancellationToken cancellationToken)
     {
-        var user = mapper.Map<User>(request.User);
-        HashPassword(request.User.Password, out byte[] passwordHash, out byte[] passwordSalt);
+        var user = mapper.Map<User>(request);
+        HashPassword(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
         user.PasswordHash = passwordHash;
         user.PasswordSalt = passwordSalt;
         dbContext.Users.Add(user);

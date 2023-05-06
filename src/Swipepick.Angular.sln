@@ -3,27 +3,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swipepick.Angular.Web", "Swipepick.Angular.Web\Swipepick.Angular.Web.csproj", "{F579336C-F396-4F02-8E18-E0EE6A3FC62F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swipepick.Angular.Web", "Swipepick.Angular.Web\Swipepick.Angular.Web.csproj", "{F579336C-F396-4F02-8E18-E0EE6A3FC62F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{D748983B-B048-4EA0-BF68-1CDE968ED84F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{27D710E6-4CF4-4001-AC7A-27BB7A1E06EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swipepick.Angular.Domain", "Swipepick.Angular.Domain\Swipepick.Angular.Domain.csproj", "{41C98593-0DAB-4B1B-86FD-1DEB6EDCFF0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swipepick.Angular.Domain", "Swipepick.Angular.Domain\Swipepick.Angular.Domain.csproj", "{41C98593-0DAB-4B1B-86FD-1DEB6EDCFF0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swipepick.Angular.DomainServices", "Swipepick.Angular.DomainServices\Swipepick.Angular.DomainServices.csproj", "{2421EDED-3A85-4A76-A8C1-4CD83943E8CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swipepick.Angular.DomainServices", "Swipepick.Angular.DomainServices\Swipepick.Angular.DomainServices.csproj", "{2421EDED-3A85-4A76-A8C1-4CD83943E8CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swipepick.Angular.UseCases", "Swipepick.Angular.UseCases\Swipepick.Angular.UseCases.csproj", "{55FEA642-2058-4103-9DC5-B5BC15090E72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swipepick.Angular.UseCases", "Swipepick.Angular.UseCases\Swipepick.Angular.UseCases.csproj", "{55FEA642-2058-4103-9DC5-B5BC15090E72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swipepick.Angular.Infrastructure.Abstractions", "Swipepick.Angular.Infrastructure.Abstractions\Swipepick.Angular.Infrastructure.Abstractions.csproj", "{FBE158C4-774D-47EA-B27B-61E6400EE9F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swipepick.Angular.Infrastructure.Abstractions", "Swipepick.Angular.Infrastructure.Abstractions\Swipepick.Angular.Infrastructure.Abstractions.csproj", "{FBE158C4-774D-47EA-B27B-61E6400EE9F7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastucture", "Infrastucture", "{7F2EC58B-7371-416D-8854-D19677B2438F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swipepick.Angular.Infrastructure", "Swipepick.Angular.Infrastructure\Swipepick.Angular.Infrastructure.csproj", "{0549D6B2-54F9-4E75-BE10-668B0FB3AD20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swipepick.Angular.Infrastructure", "Swipepick.Angular.Infrastructure\Swipepick.Angular.Infrastructure.csproj", "{0549D6B2-54F9-4E75-BE10-668B0FB3AD20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swipepick.Angular.DataAccess", "Swipepick.Angular.DataAccess\Swipepick.Angular.DataAccess.csproj", "{50B4057C-4A54-418A-82F5-4781E7BF3B85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swipepick.Angular.DataAccess", "Swipepick.Angular.DataAccess\Swipepick.Angular.DataAccess.csproj", "{50B4057C-4A54-418A-82F5-4781E7BF3B85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swipepick.Angular.Infrastructure.Common", "Swipepick.Angular.Infrastructure.Common\Swipepick.Angular.Infrastructure.Common.csproj", "{D15BA520-DF10-400D-AD2D-751F52060907}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swipepick.Angular.Infrastructure.Common", "Swipepick.Angular.Infrastructure.Common\Swipepick.Angular.Infrastructure.Common.csproj", "{D15BA520-DF10-400D-AD2D-751F52060907}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{CD9D138E-CA9D-479A-88AC-4928C774D9CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swipepick.Angular.Web.Tests", "Swipepick.Angular.Web.Tests\Swipepick.Angular.Web.Tests.csproj", "{DD0AB063-884F-436E-8C14-F8FC8BB50C02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +67,10 @@ Global
 		{D15BA520-DF10-400D-AD2D-751F52060907}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D15BA520-DF10-400D-AD2D-751F52060907}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D15BA520-DF10-400D-AD2D-751F52060907}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD0AB063-884F-436E-8C14-F8FC8BB50C02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD0AB063-884F-436E-8C14-F8FC8BB50C02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD0AB063-884F-436E-8C14-F8FC8BB50C02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD0AB063-884F-436E-8C14-F8FC8BB50C02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +84,7 @@ Global
 		{0549D6B2-54F9-4E75-BE10-668B0FB3AD20} = {7F2EC58B-7371-416D-8854-D19677B2438F}
 		{50B4057C-4A54-418A-82F5-4781E7BF3B85} = {7F2EC58B-7371-416D-8854-D19677B2438F}
 		{D15BA520-DF10-400D-AD2D-751F52060907} = {7F2EC58B-7371-416D-8854-D19677B2438F}
+		{DD0AB063-884F-436E-8C14-F8FC8BB50C02} = {CD9D138E-CA9D-479A-88AC-4928C774D9CF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A2BCC767-FAA1-47E0-8B21-3B5188ACF3EF}

@@ -42,9 +42,9 @@ public class TestController : Controller
         var quest = test.Questions
             .Select(x => new
             {
-                QueId = x.QueId,
-                Question = x.Question,
-                Options = test.Questions.Select(q => q.Question)
+                QueId = x.QuestionId,
+                Question = x.QuestionContent,
+                Options = test.Questions.Select(q => q.QuestionContent)
             }).OrderBy(y => Guid.NewGuid());
 
         return Json(quest);
@@ -66,7 +66,7 @@ public class TestController : Controller
         var currectAnsw = studentAnswer.SelectedAnswers.GroupBy(x => x.QuestionId);
         var questions = test.Questions.Select(x => x).ToList();
         var count = 0;
-        var correctAnsw = questions.Select(x => x.Answers.First()).GroupBy(x => x.QueId);
+        var correctAnsw = questions.Select(x => x.Answers.First()).GroupBy(x => x.QuestionId);
         foreach (var t in currectAnsw)
         {
             var group = correctAnsw.Single(g => g.Key == t.Key);

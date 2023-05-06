@@ -2,9 +2,9 @@
 
 public record QuestionDto
 {
-    public int QueId { get; init; }
+    public int QuestionId { get; init; }
 
-    public string Question { get; init; }
+    public string QuestionContent { get; init; }
 
-    public List<AnswerDto> Answers { get; init; }
+    public ICollection<AnswerDto> Answers { get; init; } = new List<AnswerDto>();
 }
