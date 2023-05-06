@@ -24,7 +24,6 @@ public class CreateTestCommandHandler : IRequestHandler<CreateTestCommand>
         {
             var test = mapper.Map<Test>(request.TestDto);
             test.UniqueCode = Guid.NewGuid().ToString().Split("-")[0];
-            test.User = user;
             test.UserId = user.Id;
             dbContext.Tests.Add(test);
             await dbContext.SaveChangesAsync(cancellationToken);

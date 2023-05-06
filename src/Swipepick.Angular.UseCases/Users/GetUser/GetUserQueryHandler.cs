@@ -25,11 +25,11 @@ public class GetUserQueryHandler : IRequestHandler<GetUserQuery, GetUserQueryRes
     public async Task<GetUserQueryResult> Handle(GetUserQuery request, CancellationToken cancellationToken)
     {
         var user = await dbContext.Users
-            .FirstOrDefaultAsync(u => u.Email == request.UserLoginDto.Email, cancellationToken);
+            .FirstOrDefaultAsync(u => u.Email == request.Email, cancellationToken);
 
         if (user != null)
         {
-            if (!VerifyPasswordHash(request.UserLoginDto.Password, user.PasswordHash, user.PasswordSalt))
+            if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
             {
                 return null;
             }

@@ -1,10 +1,15 @@
 ﻿using MediatR;
-using Swipepick.Angular.DomainServices;
 
 namespace Swipepick.Angular.UseCases.Users.AddUser
 {
     public record AddUserCommand : IRequest
     {
-        public UserDto User { get; init; } 
+        public string Email { get; init; }
+
+        public string Password { get; init; }
+
+        public string Name { get; init; }
+
+        public string LastName { get; init; }
     }
 }

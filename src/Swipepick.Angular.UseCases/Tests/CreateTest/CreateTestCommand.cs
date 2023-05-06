@@ -7,5 +7,5 @@ public record CreateTestCommand : IRequest
 {
     public string UserEmail { get; init; }
 
-    public TestDto TestDto { get; init; }
+    public CreateTestDto TestDto { get; init; }
 }
