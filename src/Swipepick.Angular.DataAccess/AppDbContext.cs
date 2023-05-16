@@ -59,7 +59,7 @@ public class AppDbContext : DbContext, IAppDbContext
         modelBuilder.Entity<Student>().Property(student => student.Id).ValueGeneratedOnAdd();
 
         modelBuilder.Entity<Student>()
-            .HasMany(student => student.Tests)
+            .HasOne(student => student.Test)
             .WithMany(test => test.Students);
 
         modelBuilder.Entity<User>()

@@ -4,6 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Swipepick.Angular.DomainServices;
 using Swipepick.Angular.UseCases.Tests.CreateTest;
 using Swipepick.Angular.UseCases.Tests.GetTestByCode;
+using Swipepick.Angular.UseCases.Tests.GetTestResult;
+using Swipepick.Angular.UseCases.Tests.GetTests;
+using Swipepick.Angular.UseCases.Tests.GetTestsUrls;
+using Swipepick.Angular.UseCases.Tests.SaveTest;
+using System.Security.Claims;
 
 namespace Swipepick.Angular.Web.Controllers;
 
@@ -47,7 +52,7 @@ public class TestController : Controller
                 Options = test.Questions.Select(q => q.Answers)
             }).OrderBy(y => Guid.NewGuid());
 
-        return Json(quest);
+        return Json(test.Questions.OrderBy(y => Guid.NewGuid()));
     }
 
     [AllowAnonymous]
@@ -56,29 +61,26 @@ public class TestController : Controller
         [FromBody] StudentAnswerDto studentAnswer,
         CancellationToken cancellationToken = default)
     {
-        var test = await mediator.Send(new GetTestByCodeQuery(studentAnswer.TestCode), cancellationToken);
-        var count = GetTestResult(test, studentAnswer);
+        var count = await mediator.Send(new GetTestResultCommand(studentAnswer.TestCode, studentAnswer), cancellationToken);
+        await mediator.Send(new SaveTestResultQuery() { StudentAnswer = studentAnswer, TestResult = count }, cancellationToken);
         return Ok(count);
     }
 
-    private int GetTestResult(TestDto test, StudentAnswerDto studentAnswer)
+    [Authorize]
+    [HttpGet("get-tests")]
+    public async Task<IActionResult> GetTests(CancellationToken cancellationToken)
     {
-        var currectAnsw = studentAnswer.SelectedAnswers.GroupBy(x => x.QuestionId);
-        var questions = test.Questions.Select(x => x).ToList();
-        var count = 0;
-        var correctAnsw = questions.Select(x => x.Answers.First()).GroupBy(x => x.QuestionId);
-        foreach (var t in currectAnsw)
-        {
-            var group = correctAnsw.Single(g => g.Key == t.Key);
-            var y = currectAnsw.Single(g => g.Key == t.Key);
-            var currentAns = y.Select(x => x).First();
-            var tight = group.Select(x => x).First();
-            if (tight.CorrectAnswer == currentAns.AnswerCode)
-            {
-                count++;
-            }
-        }
+        var email = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value;
+        var tests = await mediator.Send(new GetTestsQuery(email), cancellationToken);
+        return Ok(tests);
+    }
 
-        return count;
+    [Authorize]
+    [HttpGet("test-urls")]
+    public async Task<IActionResult> GetTestsUrls(CancellationToken cancellationToken)
+    {
+        var email = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value;
+        var urls = await mediator.Send(new GetTestsUrlsQuery() { UserEmail = email }, cancellationToken);
+        return Ok(urls);
     }
 }

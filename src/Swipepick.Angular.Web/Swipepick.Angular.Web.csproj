@@ -10,6 +10,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>7b0ff41f-8d04-4175-ba26-416b7c9613b9</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
   </PropertyGroup>
 
   <ItemGroup>

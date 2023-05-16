@@ -17,5 +17,9 @@ public class Student
 
     public User User { get; set; }
 
-    public ICollection<Test> Tests { get; set; } = new List<Test>();
+    public Test Test { get; set; }
+
+    public int TestId { get; set; }
+
+    public int TestResult { get; set; }
 }
