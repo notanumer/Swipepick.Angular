@@ -12,6 +12,8 @@ import { StartPageComponent } from './start-page/start-page.component';
 import {AppRoutingModule} from "./app-routing.module";
 import {AuthApiService} from "./shared/services/auth-api.service";
 import { TestPageComponent } from './test-page/test-page.component';
+import {TestApiService} from "./shared/services/test-api.service";
+import {ValidationMessageComponent} from "./shared/components/validation-message/validation-message.component";
 
 
 @NgModule({
@@ -31,8 +33,9 @@ import { TestPageComponent } from './test-page/test-page.component';
     RouterOutlet,
     RouterLink,
     ReactiveFormsModule,
+    ValidationMessageComponent,
   ],
-  providers: [AuthApiService],
+  providers: [AuthApiService, TestApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

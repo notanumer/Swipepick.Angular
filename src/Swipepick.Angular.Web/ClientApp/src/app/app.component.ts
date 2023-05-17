@@ -10,7 +10,7 @@ export class AppComponent implements OnInit{
   constructor(private auth: AuthApiService) {}
 
   ngOnInit() {
-    this.auth.autoLogin(localStorage.getItem('token'))
+    // this.auth.autoLogin(localStorage.getItem('token')).subscribe()
   }
 
 }
