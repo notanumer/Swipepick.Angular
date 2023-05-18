@@ -1,18 +1,20 @@
 <div class="background">
   <div *ngIf="test; else loading">
     <div *ngIf="isEnd; else question" class="result_wrapper">
-      <div class="text"> Ваш результат <div class="result">{{result}}/{{test.length}}</div></div>
+      <div class="text"> Ваш результат
+        <div *ngIf="result$| async as result" class="result">{{result}}/{{test.length}}</div>
+      </div>
       <a class="button_finish" [routerLink]="['/']">ЗАВЕРШИТЬ</a>
     </div>
     <ng-template #question>
       <p class="number">{{questionNumber + 1}}/{{test.length}}</p>
       <div class="wrapper">
-        <div class="question">{{test[questionNumber].question}}</div>
+        <div class="question">{{test[questionNumber].questionContent}}</div>
         <div class="responses">
-          <button *ngFor="let option of test[questionNumber].options; let optionIndex = index"
+          <button *ngFor="let option of test[questionNumber].answers[0].answerVariants; let optionIndex = index"
                   class="response"
                   (click)="saveUserResponse(optionIndex)"
-                  >{{option}}</button>
+                  >{{option.variant}}</button>
         </div>
       </div>
     </ng-template>
@@ -23,3 +25,4 @@
     </div>
   </ng-template>
 </div>
+

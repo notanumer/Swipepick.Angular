@@ -1,15 +1,25 @@
 export interface Question {
-  queId: string,
-  question: string,
-  options: string[]
+  questionId: number,
+  questionContent: string,
+  answers: Answer[]
 }
 
 export interface Answer {
-  queId: string
-  answ: number
+  answerVariants: AnswerVariant[]
+  questionId: number
 }
 
-export interface Answers {
+export interface AnswerVariant {
+  variant: string
+}
+
+export interface SelectedResponses {
   testUri: string
-  selectedAnsws: Answer[]
+  selectedAnsws: SelectedResponse[]
+}
+
+
+export interface SelectedResponse {
+  queId: number
+  answ: number
 }

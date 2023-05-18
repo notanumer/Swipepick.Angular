@@ -32,7 +32,7 @@ export class AuthPageComponent {
       ]),
       passwordLogin: new FormControl(null, [
         Validators.required,
-        Validators.minLength(7)
+        Validators.minLength(6)
       ])
     })
 

@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TestApiService} from "../shared/services/test-api.service";
 import {ActivatedRoute, Params} from "@angular/router";
 import {Observable, Subscription, switchMap} from "rxjs";
-import {Question, Answer} from "../shared/interfaces/test-interfaces";
+import {Question, Answer, SelectedResponse} from "../shared/interfaces/test-interfaces";
 
 @Component({
   selector: 'app-test-page',
@@ -15,8 +15,8 @@ export class TestPageComponent implements OnInit, OnDestroy{
   test!: Question[]
   questionNumber = 0
   isEnd = false;
-  answers: Answer[] = []
-  result: string = ''
+  answers: SelectedResponse[] = []
+  result$!: Observable<any>
   testSubscription!: Subscription
 
   constructor(
@@ -33,6 +33,7 @@ export class TestPageComponent implements OnInit, OnDestroy{
 
     this.testSubscription = this.test$.subscribe((test) => {
       this.test = test
+      console.log(this.test)
     })
   }
 
@@ -41,19 +42,19 @@ export class TestPageComponent implements OnInit, OnDestroy{
   }
 
   saveUserResponse(answer: number) {
-    this.questionNumber++
     this.answers.push({
-      queId: this.test[this.questionNumber].queId,
+      queId: this.test[this.questionNumber].questionId,
       answ: answer
     })
     if (this.questionNumber + 1 === this.test.length) {
       this.isEnd = true
-      this.testService.submitAnswers(
+      this.result$ = this.testService.submitAnswers(
       {
         testUri: this.testId,
         selectedAnsws: this.answers
       }
       )
     }
+    this.questionNumber++
   }
 }
