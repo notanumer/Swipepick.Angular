@@ -14,6 +14,12 @@ import {AuthApiService} from "./shared/services/auth-api.service";
 import { TestPageComponent } from './test-page/test-page.component';
 import {TestApiService} from "./shared/services/test-api.service";
 import {ValidationMessageComponent} from "./shared/components/validation-message/validation-message.component";
+import { CreatingTestPageComponent } from './creating-test-page/creating-test-page.component';
+import { ProfileLayoutComponent } from './shared/components/profile-layout/profile-layout.component';
+import { StartLayoutComponent } from './shared/components/start-layout/start-layout.component';
+import { InformationPageComponent } from './information-page/information-page.component';
+import { CreatingPageComponent } from './creating-page/creating-page.component';
+import { SettingsPageComponent } from './settings-page/settings-page.component';
 
 
 @NgModule({
@@ -24,6 +30,12 @@ import {ValidationMessageComponent} from "./shared/components/validation-message
     ProfilePageComponent,
     StartPageComponent,
     TestPageComponent,
+    CreatingTestPageComponent,
+    ProfileLayoutComponent,
+    StartLayoutComponent,
+    InformationPageComponent,
+    CreatingPageComponent,
+    SettingsPageComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),

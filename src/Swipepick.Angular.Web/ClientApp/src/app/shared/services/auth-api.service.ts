@@ -13,6 +13,10 @@ export class AuthApiService {
     return localStorage.getItem('token')
   }
 
+  get userEmail(): string | null {
+    return localStorage.getItem('userEmail')
+  }
+
   login(user: UserLogin): Observable<any> {
     return this.http.post<UserLoginResponse>(this.baseUrl + 'api/auth/login', user)
       .pipe(
@@ -45,6 +49,7 @@ export class AuthApiService {
   private setToken(response: UserLoginResponse | null) {
     if (response) {
       localStorage.setItem('token', response.token)
+      localStorage.setItem('userEmail', response.userEmail)
     } else {
       localStorage.clear()
     }

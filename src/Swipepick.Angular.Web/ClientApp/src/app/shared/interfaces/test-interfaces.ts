@@ -23,3 +23,27 @@ export interface SelectedResponse {
   queId: number
   answ: number
 }
+
+
+// Интерфейсы для создания теста
+
+
+export  interface CreatedTest {
+  userEmail: string
+  testDto: {}
+}
+
+export interface TestDto {
+  questions: CreatedQuestion[]
+}
+
+export interface CreatedQuestion {
+  questionContent: string
+  answers: CreatedAnswers[]
+}
+
+export interface CreatedAnswers {
+  answerVariants: AnswerVariant[]
+  correctAnswer: number
+}
+

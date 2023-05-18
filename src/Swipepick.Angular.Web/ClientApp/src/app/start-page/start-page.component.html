@@ -1,29 +1,3 @@
-<header class="main-header">
-  <div class="wrapper">
-    <nav class="main-nav">
-      <a class="logo" [routerLink]="['/']" href="/">
-        <img src="./assets/images/logo.svg" alt="logo"/>
-      </a>
-      <ul class="site-navigation">
-        <li class="site-navigation-item">
-          <a href="#">СОЗДАТЬ</a>
-        </li>
-        <li class="site-navigation-item">
-          <a [routerLink]="['/begin']">ПРОЙТИ</a>
-        </li>
-        <li class="site-navigation-item">
-          <a [routerLink]="['/']">О НАС</a>
-        </li>
-        <li class="site-navigation-item">
-          <button *ngIf="auth.isAuthenticated(); else loginBlock" (click)="auth.logout()">ВЫЙТИ</button>
-          <ng-template #loginBlock>
-            <a [routerLink]="['/login']">ВОЙТИ</a>
-          </ng-template>
-        </li>
-      </ul>
-    </nav>
-  </div>
-</header>
 <main class="main-main">
   <div class="wrapper">
     <section class="hero">

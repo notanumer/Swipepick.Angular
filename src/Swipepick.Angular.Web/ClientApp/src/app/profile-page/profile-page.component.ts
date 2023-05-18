@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {AuthApiService} from "../shared/services/auth-api.service";
 
 @Component({
   selector: 'app-profile-page',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./profile-page.component.css']
 })
 export class ProfilePageComponent {
+  constructor(public auth: AuthApiService) {
 
+  }
 }
