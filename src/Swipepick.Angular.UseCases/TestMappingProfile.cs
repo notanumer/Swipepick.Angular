@@ -14,7 +14,6 @@ public class TestMappingProfile : Profile
         CreateMap<Test, CreateTestDto>().ReverseMap();
 		CreateMap<Student, StudentDto>().ReverseMap();
 		CreateMap<Question, QuestionDto>()
-			.ForMember(que => que.QuestionId, dest => dest.Ignore())
 			.ReverseMap();
 		CreateMap<Answer, AnswerDto>().ReverseMap();
 		CreateMap<AnswerVariant, AnswerVariantDto>().ReverseMap();
