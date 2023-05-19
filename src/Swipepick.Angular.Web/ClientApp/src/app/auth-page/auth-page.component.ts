@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthApiService} from "../shared/services/auth-api.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
@@ -9,7 +9,7 @@ import {UserLogin, UserLoginResponse, UserRegister} from "../shared/interfaces/a
   templateUrl: './auth-page.component.html',
   styleUrls: ['./auth-page.component.css']
 })
-export class AuthPageComponent {
+export class AuthPageComponent implements OnInit{
 
   isLogin: boolean = true
 

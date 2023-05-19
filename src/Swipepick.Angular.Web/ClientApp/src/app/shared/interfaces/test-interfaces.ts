@@ -13,15 +13,22 @@ export interface AnswerVariant {
   variant: string
 }
 
+// export interface SelectedResponses {
+//   testUri: string
+//   selectedAnsws: SelectedResponse[]
+// }
+// Отправка данных пройденного теста
+
 export interface SelectedResponses {
-  testUri: string
-  selectedAnsws: SelectedResponse[]
+  testCode: string
+  selectedAnswers: SelectedResponse[]
+  name: string
+  lastname: string
 }
 
-
 export interface SelectedResponse {
-  queId: number
-  answ: number
+  questionId: number
+  answerCode: number
 }
 
 
@@ -30,7 +37,7 @@ export interface SelectedResponse {
 
 export  interface CreatedTest {
   userEmail: string
-  testDto: {}
+  testDto: TestDto
 }
 
 export interface TestDto {

@@ -2,7 +2,7 @@ import {Inject, Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {catchError, Observable, tap} from "rxjs";
 import {UserLogin, UserLoginResponse, UserRegister} from "../interfaces/auth-interfaces";
-import {SelectedResponses, Question, SelectedResponse} from "../interfaces/test-interfaces";
+import {SelectedResponses, Question, SelectedResponse, CreatedTest} from "../interfaces/test-interfaces";
 
 @Injectable()
 export class TestApiService {
@@ -16,7 +16,11 @@ export class TestApiService {
   }
 
   submitAnswers(answers: SelectedResponses) {
-    return this.http.post(this.baseUrl + `api/submit-answers`, answers)
+    return this.http.post(this.baseUrl + 'api/tests/submit-answers', answers)
+  }
+
+  creatingTest(createdTest: CreatedTest): Observable<any> {
+    return this.http.post(this.baseUrl + 'api/tests/create', createdTest)
   }
 
 }

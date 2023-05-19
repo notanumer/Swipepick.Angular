@@ -1,22 +1,32 @@
 <div class="background">
   <div *ngIf="test; else loading">
-    <div *ngIf="isEnd; else question" class="result_wrapper">
-      <div class="text"> Ваш результат
-        <div *ngIf="result$| async as result" class="result">{{result}}/{{test.length}}</div>
-      </div>
-      <a class="button_finish" [routerLink]="['/']">ЗАВЕРШИТЬ</a>
-    </div>
-    <ng-template #question>
-      <p class="number">{{questionNumber + 1}}/{{test.length}}</p>
-      <div class="wrapper">
-        <div class="question">{{test[questionNumber].questionContent}}</div>
-        <div class="responses">
-          <button *ngFor="let option of test[questionNumber].answers[0].answerVariants; let optionIndex = index"
-                  class="response"
-                  (click)="saveUserResponse(optionIndex)"
-                  >{{option.variant}}</button>
+    <form *ngIf="isStart; else passingTest" [formGroup]="userDataForm">
+      <input formControlName="name">
+      <input formControlName="lastname">
+      <button (click)="isStart = false">Далее</button>
+    </form>
+    <ng-template #passingTest>
+      <div *ngIf="isEnd; else question" class="result_wrapper">
+        <div class="text"> Ваш результат
+          <div *ngIf="result$| async as result; else loadingResult" class="result">{{result}}/{{test.length}}</div>
+          <ng-template #loadingResult>
+            <div class="result">?/{{test.length}}</div>
+          </ng-template>
         </div>
+        <a class="button_finish" [routerLink]="['/']">ЗАВЕРШИТЬ</a>
       </div>
+      <ng-template #question>
+        <p class="number">{{questionNumber + 1}}/{{test.length}}</p>
+        <div class="wrapper">
+          <div class="question">{{test[questionNumber].questionContent}}</div>
+          <div class="responses">
+            <button *ngFor="let option of test[questionNumber].answers[0].answerVariants; let optionIndex = index"
+                    class="response"
+                    (click)="saveUserResponse(optionIndex)"
+                    >{{option.variant}}</button>
+          </div>
+        </div>
+      </ng-template>
     </ng-template>
   </div>
   <ng-template #loading>

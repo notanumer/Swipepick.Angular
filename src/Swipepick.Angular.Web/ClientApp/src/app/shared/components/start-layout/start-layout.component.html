@@ -6,7 +6,7 @@
       </a>
       <ul class="site-navigation">
         <li class="site-navigation-item">
-          <a *ngIf="auth.isAuthenticated(); else creatingLoginBlock" [routerLink]="['/creating-test']">СОЗДАТЬ</a>
+          <a *ngIf="auth.isAuthenticated(); else creatingLoginBlock" [routerLink]="['/profile', 'creating']">СОЗДАТЬ</a>
           <ng-template #creatingLoginBlock>
             <a [routerLink]="['/auth']">СОЗДАТЬ</a>
           </ng-template>
@@ -15,7 +15,7 @@
           <a [routerLink]="['/begin']">ПРОЙТИ</a>
         </li>
         <li class="site-navigation-item">
-          <a [routerLink]="['/']">О НАС</a>
+          <a [routerLink]="['/start', 'information']">О НАС</a>
         </li>
         <li class="site-navigation-item">
           <a *ngIf="auth.isAuthenticated(); else loginBlock" [routerLink]="['/profile']">ПРОФИЛЬ</a>
