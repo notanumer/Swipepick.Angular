@@ -345,3 +345,4 @@ web.config
 firestore.Development.json
 .data
 src/Saritasa.Appalyzer.Web/wwwroot/dist
+src/Swipepick.Angular.Web/ClientApp/.angular

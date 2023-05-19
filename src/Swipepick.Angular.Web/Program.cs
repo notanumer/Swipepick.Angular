@@ -57,7 +57,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 // AutoMapper.
-Swipepick.Angular.Web.Infrastructure.DependencyInjection.AutoMapperModule.Register(builder.Services);
+builder.Services.AddAutoMapper(Assembly.GetAssembly(typeof(TestMappingProfile)));
 
 // MediatR.
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetAssembly(typeof(CreateTestCommand))));

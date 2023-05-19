@@ -11,12 +11,6 @@ public class StudentAnswer
 
     public Student Student { get; set; }
 
-    public string FirstAnswer { get; init; }
-
-    public string SecondAnswer { get; init; }
-
-    public string ThirdAnswer { get; init; }
-
-    public string FourhAnswer { get; init; }
+    public ICollection<StudentAnswerVariant> Answers { get; set; } = new List<StudentAnswerVariant>();
 
 }

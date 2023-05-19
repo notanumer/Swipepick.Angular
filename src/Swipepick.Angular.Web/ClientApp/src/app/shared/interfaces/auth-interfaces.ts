@@ -12,4 +12,5 @@ export interface UserRegister {
 
 export interface UserLoginResponse {
   token: string
+  userEmail: string
 }

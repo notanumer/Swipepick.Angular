@@ -9,11 +9,19 @@ public class TestMappingProfile : Profile
 {
 	public TestMappingProfile()
 	{
-		CreateMap<Test, CreateTestDto>();
-		CreateMap<Student, StudentDto>();
+		CreateMap<Test, TestDto>();
+        CreateMap<Test, Tests.GetTestByCode.Dto.TestDto>();
+        CreateMap<Test, CreateTestDto>().ReverseMap();
+		CreateMap<Student, StudentDto>().ReverseMap();
 		CreateMap<Question, QuestionDto>()
-			.ForMember(que => que.QuestionId, dest => dest.Ignore());
-		CreateMap<Answer, AnswerDto>();
-		CreateMap<AnswerVariant, AnswerVariantDto>();
-	}
+			.ReverseMap();
+		CreateMap<Answer, AnswerDto>().ReverseMap();
+		CreateMap<AnswerVariant, AnswerVariantDto>().ReverseMap();
+
+        CreateMap<Question, Tests.GetTestByCode.Dto.QuestionDto>()
+            .ForMember(que => que.QuestionId, dest => dest.Ignore())
+            .ReverseMap();
+        CreateMap<Answer, Tests.GetTestByCode.Dto.AnswerDto>().ReverseMap();
+        CreateMap<AnswerVariant, Tests.GetTestByCode.Dto.AnswerVariantDto>().ReverseMap();
+    }
 }

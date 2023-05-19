@@ -15,12 +15,11 @@
           <a [routerLink]="['/']">О НАС</a>
         </li>
         <li class="site-navigation-item">
-          <a [routerLink]="['/login']">ВОЙТИ</a>
+          <button *ngIf="auth.isAuthenticated(); else loginBlock" (click)="auth.logout()">ВЫЙТИ</button>
+          <ng-template #loginBlock>
+            <a [routerLink]="['/login']">ВОЙТИ</a>
+          </ng-template>
         </li>
-        <!--          <li class="site-navigation-item">-->
-        <!--            {isAuth ? <Link className="authorization" href="profile">ПРОФИЛЬ</Link> :-->
-        <!--                <Link className="authorization" href="login">ВОЙТИ</Link>}-->
-        <!--          </li>-->
       </ul>
     </nav>
   </div>

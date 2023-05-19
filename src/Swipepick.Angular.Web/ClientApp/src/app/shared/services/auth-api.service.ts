@@ -1,6 +1,6 @@
 import {Inject, Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {catchError, Observable, tap} from "rxjs";
+import {Observable, tap} from "rxjs";
 import {UserLogin, UserLoginResponse, UserRegister} from "../interfaces/auth-interfaces";
 
 @Injectable()
@@ -14,14 +14,18 @@ export class AuthApiService {
   }
 
   login(user: UserLogin): Observable<any> {
-    return this.http.post(this.baseUrl + 'api/auth/login', user  )
+    return this.http.post<UserLoginResponse>(this.baseUrl + 'api/auth/login', user)
+      .pipe(
+        tap(this.setToken)
+      )
+
 
 
   }
 
   autoLogin(token: string | null): Observable<any> | void{
     if (token) {
-      return this.http.post(this.baseUrl + 'api/auth/login', token)
+      return this.http.post(this.baseUrl + 'Api/auth/get-email', token)
     }
   }
 
