@@ -1,20 +1,21 @@
+#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
-EXPOSE 5000
-
-ENV ASPNETCORE_URLS=http://+:5000
-
-# Creates a non-root user with an explicit UID and adds permission to access the /app folder
-# For more info, please refer to https://aka.ms/vscode-docker-dotnet-configure-containers
-RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
-USER appuser
+EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["src/Swipepick.Angular.Web/Swipepick.Angular.Web.csproj", "src/Swipepick.Angular.Web/"]
-RUN dotnet restore "src/Swipepick.Angular.Web/Swipepick.Angular.Web.csproj"
+COPY ["Swipepick.Angular.Web/Swipepick.Angular.Web.csproj", "Swipepick.Angular.Web/"]
+COPY ["Swipepick.Angular.DataAccess/Swipepick.Angular.DataAccess.csproj", "Swipepick.Angular.DataAccess/"]
+COPY ["Swipepick.Angular.Domain/Swipepick.Angular.Domain.csproj", "Swipepick.Angular.Domain/"]
+COPY ["Swipepick.Angular.Infrastructure.Abstractions/Swipepick.Angular.Infrastructure.Abstractions.csproj", "Swipepick.Angular.Infrastructure.Abstractions/"]
+COPY ["Swipepick.Angular.Infrastructure.Common/Swipepick.Angular.Infrastructure.Common.csproj", "Swipepick.Angular.Infrastructure.Common/"]
+COPY ["Swipepick.Angular.UseCases/Swipepick.Angular.UseCases.csproj", "Swipepick.Angular.UseCases/"]
+COPY ["Swipepick.Angular.DomainServices/Swipepick.Angular.DomainServices.csproj", "Swipepick.Angular.DomainServices/"]
+RUN dotnet restore "Swipepick.Angular.Web/Swipepick.Angular.Web.csproj"
 COPY . .
-WORKDIR "/src/src/Swipepick.Angular.Web"
+WORKDIR "/src/Swipepick.Angular.Web"
 RUN dotnet build "Swipepick.Angular.Web.csproj" -c Release -o /app/build
 
 FROM build AS publish
