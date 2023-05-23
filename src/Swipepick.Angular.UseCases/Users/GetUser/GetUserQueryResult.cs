@@ -2,7 +2,7 @@
 
 public record GetUserQueryResult
 {
-    public string Email { get; init; }
+    public string UserEmail { get; init; }
 
     public string Token { get; init; }
 }

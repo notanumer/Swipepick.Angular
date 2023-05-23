@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Swipepick.Angular.Domain;
+using Swipepick.Angular.Infrastructure.Abstractions.Exceptions;
 using Swipepick.Angular.Infrastructure.Abstractions.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -31,17 +32,17 @@ public class GetUserQueryHandler : IRequestHandler<GetUserQuery, GetUserQueryRes
         {
             if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
             {
-                return null;
+                throw new UserNotFoundException("User not found.");
             }
 
             return new GetUserQueryResult()
             {
-                Email = user.Email,
+                UserEmail = user.Email,
                 Token = GenerateJwt(user)
             };
         }
 
-        return null;
+        throw new UserNotFoundException("User not found.");
     }
 
     private List<Claim> GetClaims(User user)

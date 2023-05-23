@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Swipepick.Angular.Infrastructure.Abstractions.Exceptions;
 using Swipepick.Angular.Infrastructure.Abstractions.Interfaces;
 using Swipepick.Angular.UseCases.Tests.GetTestByCode.Dto;
 
@@ -24,6 +25,12 @@ public class GetTestByCodeQueryHandler : IRequestHandler<GetTestByCodeQuery, Tes
             .Where(test => test.UniqueCode == request.UniqueCode)
             .ProjectTo<TestDto>(mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(cancellationToken);
+
+        if (test == null)
+        {
+            throw new TestNotFoundException($"Test with code {request.UniqueCode} not found");
+        }
+
         return test;
     }
 }
