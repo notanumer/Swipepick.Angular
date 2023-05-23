@@ -6,9 +6,9 @@ using Swipepick.Angular.Infrastructure.Abstractions.Interfaces;
 using Swipepick.Angular.UseCases;
 using Swipepick.Angular.UseCases.Tests.CreateTest;
 using Swipepick.Angular.Web.Infrastructure.Startup;
+using Swipepick.Angular.Web.Middlewares;
 using System.Reflection;
 using System.Text;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -70,7 +70,7 @@ builder.Services.AddAsyncInitializer<DatabaseInitializer>();
 builder.Services.AddScoped<IAppDbContext, AppDbContext>();
 
 // Views
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -80,16 +80,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
 app.UseRouting();
-app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
-app.MapFallbackToFile("index.html");
+app.MapControllers();
 
 await app.InitAsync();
 await app.RunAsync();
