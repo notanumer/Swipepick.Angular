@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Swipepick.Angular.DomainServices;
+using Swipepick.Angular.UseCases.Tests.GetTestByCode.Dto;
 
 namespace Swipepick.Angular.UseCases.Tests.GetTestByCode;
 
