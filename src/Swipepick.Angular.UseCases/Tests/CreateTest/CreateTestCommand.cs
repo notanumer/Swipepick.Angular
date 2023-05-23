@@ -3,7 +3,7 @@ using Swipepick.Angular.DomainServices;
 
 namespace Swipepick.Angular.UseCases.Tests.CreateTest;
 
-public record CreateTestCommand : IRequest
+public record CreateTestCommand : IRequest<string>
 {
     public string UserEmail { get; init; }
 

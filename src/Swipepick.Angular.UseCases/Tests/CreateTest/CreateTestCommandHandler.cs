@@ -2,11 +2,12 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Swipepick.Angular.Domain;
+using Swipepick.Angular.Infrastructure.Abstractions.Exceptions;
 using Swipepick.Angular.Infrastructure.Abstractions.Interfaces;
 
 namespace Swipepick.Angular.UseCases.Tests.CreateTest;
 
-public class CreateTestCommandHandler : IRequestHandler<CreateTestCommand>
+public class CreateTestCommandHandler : IRequestHandler<CreateTestCommand, string>
 {
     private readonly IAppDbContext dbContext;
     private readonly IMapper mapper;
@@ -17,7 +18,7 @@ public class CreateTestCommandHandler : IRequestHandler<CreateTestCommand>
         this.mapper = mapper;
     }
 
-    public async Task Handle(CreateTestCommand request, CancellationToken cancellationToken)
+    public async Task<string> Handle(CreateTestCommand request, CancellationToken cancellationToken)
     {
         var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Email == request.UserEmail, cancellationToken);
         if (user != null)
@@ -27,6 +28,9 @@ public class CreateTestCommandHandler : IRequestHandler<CreateTestCommand>
             test.UserId = user.Id;
             dbContext.Tests.Add(test);
             await dbContext.SaveChangesAsync(cancellationToken);
+            return test.UniqueCode;
         }
+
+        throw new UserNotFoundException($"User with email {request.UserEmail} not found.");
     }
 }

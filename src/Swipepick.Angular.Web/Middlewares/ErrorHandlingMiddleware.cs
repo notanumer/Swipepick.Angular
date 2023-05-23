@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Swipepick.Angular.Web.Exceptions;
+using Swipepick.Angular.Infrastructure.Abstractions.Exceptions;
 using System.Net;
 
 namespace Swipepick.Angular.Web.Middlewares;

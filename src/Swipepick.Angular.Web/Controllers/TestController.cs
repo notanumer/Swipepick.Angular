@@ -25,13 +25,8 @@ public class TestController : Controller
 
     [HttpPost("create")]
     [Authorize]
-    public async Task<IActionResult> Create(
-        CreateTestCommand createTestCommand,
-        CancellationToken cancellationToken = default)
-    {
-        await mediator.Send(createTestCommand, cancellationToken);
-        return Ok();
-    }
+    public async Task<string> Create(CreateTestCommand createTestCommand, CancellationToken cancellationToken = default)
+        => await mediator.Send(createTestCommand, cancellationToken);
 
     [AllowAnonymous]
     [HttpGet("{uniqueCode}")]
