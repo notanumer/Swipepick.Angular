@@ -89,7 +89,16 @@ app.UseAuthorization();
 
 app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
-app.MapControllers();
+app.UseEndpoints(endp =>
+{
+    endp.Map("/", context =>
+    {
+        context.Response.Redirect("/swagger");
+        return Task.CompletedTask;
+    });
+
+    endp.MapControllers();
+});
 
 await app.InitAsync();
 await app.RunAsync();
