@@ -74,11 +74,8 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseRouting();
 
@@ -89,15 +86,11 @@ app.UseAuthorization();
 
 app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
-app.UseEndpoints(endp =>
+app.MapControllers();
+app.Map("/", context =>
 {
-    endp.Map("/", context =>
-    {
-        context.Response.Redirect("/swagger");
-        return Task.CompletedTask;
-    });
-
-    endp.MapControllers();
+    context.Response.Redirect("/swagger");
+    return Task.CompletedTask;
 });
 
 await app.InitAsync();
