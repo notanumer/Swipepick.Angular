@@ -12,7 +12,7 @@ namespace Swipepick.Angular.Domain
         [Key]
         public int Id { get; set; }
 
-        public StudentAnswer Answer { get; set; }
+        public StudentAnswer? Answer { get; set; }
 
         public int StudentAnswerId { get; set; }
 

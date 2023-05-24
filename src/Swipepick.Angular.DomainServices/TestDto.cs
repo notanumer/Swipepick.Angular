@@ -2,7 +2,7 @@
 
 public record TestDto
 {
-    public string Title { get; init; }
+    required public string Title { get; init; }
 
     public ICollection<StudentDto> Students { get; init; } = new List<StudentDto>();
 

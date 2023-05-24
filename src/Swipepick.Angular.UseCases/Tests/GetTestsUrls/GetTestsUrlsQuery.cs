@@ -4,5 +4,5 @@ namespace Swipepick.Angular.UseCases.Tests.GetTestsUrls;
 
 public class GetTestsUrlsQuery : IRequest<IEnumerable<string>>
 {
-    public string UserEmail { get; set; }
+    required public string UserEmail { get; set; }
 }

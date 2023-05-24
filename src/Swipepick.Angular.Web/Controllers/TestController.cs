@@ -46,7 +46,7 @@ public class TestController : Controller
     }
 
     [Authorize]
-    [HttpGet("get-tests")]
+    [HttpGet]
     public async Task<IActionResult> GetTests(CancellationToken cancellationToken)
     {
         var email = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)!.Value;
@@ -55,7 +55,7 @@ public class TestController : Controller
     }
 
     [Authorize]
-    [HttpGet("test-urls")]
+    [HttpGet("urls")]
     public async Task<IActionResult> GetTestsUrls(CancellationToken cancellationToken)
     {
         var email = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)!.Value;
