@@ -343,6 +343,6 @@ healthchecksdb
 Config.ps1
 web.config
 firestore.Development.json
+appsettings.Development.json
+appsettings.Production.json
 .data
-src/Saritasa.Appalyzer.Web/wwwroot/dist
-src/Swipepick.Angular.Web/ClientApp/.angular
