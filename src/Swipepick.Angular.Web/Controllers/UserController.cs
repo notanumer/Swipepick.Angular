@@ -8,11 +8,11 @@ namespace Swipepick.Angular.Web.Controllers;
 [Route("api/user")]
 public class UserController : Controller
 {
-    [Authorize]
-    [HttpGet("email")]
-    public IActionResult GetEmail()
-    {
-        var email = User.Claims.First(x => x.Type == ClaimTypes.Email);
-        return Json(new { email = email.Value });
-    }
+    //[Authorize]
+    //[HttpGet("email")]
+    //public IActionResult GetEmail()
+    //{
+    //    var email = User.Claims.First(x => x.Type == ClaimTypes.Email);
+    //    return Json(new { email = email.Value });
+    //}
 }
