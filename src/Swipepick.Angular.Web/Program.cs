@@ -1,66 +1,26 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using Swipepick.Angular.DataAccess;
 using Swipepick.Angular.Infrastructure.Abstractions.Interfaces;
-using Swipepick.Angular.UseCases;
-using Swipepick.Angular.UseCases.Tests.CreateTest;
+using Swipepick.Angular.Web.Infrastructure.DependencyInjection;
 using Swipepick.Angular.Web.Infrastructure.Startup;
 using Swipepick.Angular.Web.Middlewares;
-using System.Reflection;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors();
-builder.Services.AddSwaggerGen(options =>
-{
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Scheme = "Bearer",
-        BearerFormat = "JWT",
-        In = ParameterLocation.Header,
-        Name = "Authorization",
-        Description = "Bearer Authorization with JWT",
-        Type = SecuritySchemeType.Http
-    });
+builder.Services.AddSwaggerGen(new SwaggerGenOptionsSetup().Setup);
 
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Id = "Bearer",
-                    Type = ReferenceType.SecurityScheme
-                }
-            },
-            new List<string>()
-        }
-    });
-});
 // Jwt.
+var jwtSecret = builder.Configuration["JwtAuth:Key"] ?? throw new ArgumentNullException("JwtAuth:Key");
+var jwtIssuer = builder.Configuration["JwtAuth:Issuer"] ?? throw new ArgumentNullException("JwtAuth:Issuer");
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["JwtAuth:Issuer"],
-            ValidAudience = builder.Configuration["JwtAuth:Issuer"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtAuth:Key"]))
-        };
-    });
+    .AddJwtBearer(new JwtBearerOptionsSetup(jwtIssuer, jwtSecret).Setup);
 
 // AutoMapper.
-builder.Services.AddAutoMapper(Assembly.GetAssembly(typeof(TestMappingProfile)));
+AutoMapperModule.Register(builder.Services);
 
 // MediatR.
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetAssembly(typeof(CreateTestCommand))));
+MediatRModule.Register(builder.Services);
 
 // Database.
 var databaseConnectionString = builder.Configuration.GetConnectionString("AppDatabase")
@@ -69,7 +29,7 @@ builder.Services.AddDbContext<AppDbContext>(new DbContextOptionsSetup(databaseCo
 builder.Services.AddAsyncInitializer<DatabaseInitializer>();
 builder.Services.AddScoped<IAppDbContext, AppDbContext>();
 
-// Views
+// Controllers.
 builder.Services.AddControllers();
 
 var app = builder.Build();
