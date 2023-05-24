@@ -18,7 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Swipepick.Angular.Domain\Swipepick.Angular.Domain.csproj" />
     <ProjectReference Include="..\Swipepick.Angular.Infrastructure.Abstractions\Swipepick.Angular.Infrastructure.Abstractions.csproj" />
-    <ProjectReference Include="..\Swipepick.Angular.Infrastructure.Common\Swipepick.Angular.Infrastructure.Common.csproj" />
   </ItemGroup>
 
 </Project>

@@ -9,7 +9,7 @@ public class StudentAnswer
 
     public int StudentId { get; set; }
 
-    public Student Student { get; set; }
+    public Student? Student { get; set; }
 
     public ICollection<StudentAnswerVariant> Answers { get; set; } = new List<StudentAnswerVariant>();
 

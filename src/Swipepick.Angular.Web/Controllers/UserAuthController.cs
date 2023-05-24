@@ -19,23 +19,11 @@ public class UserAuthController : Controller
 
     [AllowAnonymous]
     [HttpPost("login")]
-    public async Task<IActionResult> Login(GetUserQuery query, CancellationToken cancellationToken = default)
-    {
-        var result = await mediator.Send(query, cancellationToken);
-
-        if (result == null)
-            return BadRequest(new { errorText = "User Not Found" });
-
-        var tokenString = result.Token;
-        return Json(new { token = tokenString, userEmail = result.Email });
-
-    }
+    public async Task<GetUserQueryResult> Login(GetUserQuery query, CancellationToken cancellationToken = default)
+         => await mediator.Send(query, cancellationToken);
 
     [AllowAnonymous]
     [HttpPost("register")]
-    public async Task<IActionResult> Register(AddUserCommand addUserCommand)
-    {
-        await mediator.Send(addUserCommand);
-        return Ok();
-    }
+    public async Task Register(AddUserCommand addUserCommand)
+        => await mediator.Send(addUserCommand);
 }

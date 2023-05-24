@@ -2,7 +2,9 @@
 
 public record StudentDto
 {
-    public string Name { get; init; }
+    required public string Name { get; init; }
 
-    public string Lastname { get; init; }
+    required public string Lastname { get; init; }
+
+    public int TestResult { get; init; }
 }

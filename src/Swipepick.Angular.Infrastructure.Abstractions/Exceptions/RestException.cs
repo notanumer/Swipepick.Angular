@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Swipepick.Angular.Web.Exceptions;
+namespace Swipepick.Angular.Infrastructure.Abstractions.Exceptions;
 
 public abstract class RestException : Exception
 {

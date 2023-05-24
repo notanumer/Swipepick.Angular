@@ -2,7 +2,9 @@
 
 public record TestDto
 {
-    public List<StudentDto> Students { get; init; }
+    required public string Title { get; init; }
 
-    public List<QuestionDto> Questions { get; init; }
+    public ICollection<StudentDto> Students { get; init; } = new List<StudentDto>();
+
+    public ICollection<QuestionDto> Questions { get; init; } = new List<QuestionDto>();
 }

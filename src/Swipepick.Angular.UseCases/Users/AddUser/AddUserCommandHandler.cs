@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Swipepick.Angular.UseCases.Users.AddUser;
 
-public class AddUserCommandHandler : IRequestHandler<AddUserCommand>
+internal class AddUserCommandHandler : IRequestHandler<AddUserCommand>
 {
     private readonly IAppDbContext dbContext;
     private readonly IMapper mapper;

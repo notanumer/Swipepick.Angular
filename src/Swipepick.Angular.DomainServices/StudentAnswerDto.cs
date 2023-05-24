@@ -2,11 +2,11 @@
 
 public record StudentAnswerDto
 {
-    public string TestCode { get; init; }
+    required public string TestCode { get; init; }
 
-    public List<SelectedAnswerDto> SelectedAnswers { get; init; }
+    public ICollection<SelectedAnswerDto> SelectedAnswers { get; init; } = new List<SelectedAnswerDto>();
 
-    public string Name { get; init; }
+    required public string Name { get; init; }
 
-    public string Lastname { get; init; }
+    required public string Lastname { get; init; }
 }

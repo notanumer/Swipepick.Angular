@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Swipepick.Angular.Domain;
+using Swipepick.Angular.Infrastructure.Abstractions.Exceptions;
 using Swipepick.Angular.Infrastructure.Abstractions.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -11,7 +12,7 @@ using System.Text;
 
 namespace Swipepick.Angular.UseCases.Users.GetUser;
 
-public class GetUserQueryHandler : IRequestHandler<GetUserQuery, GetUserQueryResult>
+internal class GetUserQueryHandler : IRequestHandler<GetUserQuery, GetUserQueryResult>
 {
     private readonly IAppDbContext dbContext;
     private readonly IConfiguration configuration;
@@ -31,17 +32,17 @@ public class GetUserQueryHandler : IRequestHandler<GetUserQuery, GetUserQueryRes
         {
             if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
             {
-                return null;
+                throw new UserNotFoundException("User not found.");
             }
 
             return new GetUserQueryResult()
             {
-                Email = user.Email,
+                UserEmail = user.Email,
                 Token = GenerateJwt(user)
             };
         }
 
-        return null;
+        throw new UserNotFoundException("User not found.");
     }
 
     private List<Claim> GetClaims(User user)
@@ -60,11 +61,13 @@ public class GetUserQueryHandler : IRequestHandler<GetUserQuery, GetUserQueryRes
 
     private string GenerateJwt(User user)
     {
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtAuth:Key"]));
+        var jwtSecret = configuration["JwtAuth:Key"] ?? throw new ArgumentNullException("JwtAuth:Key");
+        var jwtIssuer = configuration["JwtAuth:Issuer"] ?? throw new ArgumentNullException("JwtAuth:Issuer");
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
         var claims = GetClaims(user);
-        var token = new JwtSecurityToken(configuration["JwtAuth:Issuer"],
-          configuration["JwtAuth:Issuer"],
+        var token = new JwtSecurityToken(jwtIssuer,
+          jwtIssuer,
           claims,
           expires: DateTime.Now.AddMinutes(120),
           signingCredentials: credentials);
@@ -74,10 +77,8 @@ public class GetUserQueryHandler : IRequestHandler<GetUserQuery, GetUserQueryRes
 
     private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
     {
-        using (var hmac = new HMACSHA512(passwordSalt))
-        {
-            var computeHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-            return computeHash.SequenceEqual(passwordHash);
-        }
+        using var hmac = new HMACSHA512(passwordSalt);
+        var computeHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+        return computeHash.SequenceEqual(passwordHash);
     }
 }

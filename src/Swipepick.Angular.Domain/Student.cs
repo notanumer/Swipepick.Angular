@@ -9,15 +9,15 @@ public class Student
 
     public int UserId { get; set; }
 
-    public string Name { get; set; }
+    required public string Name { get; set; }
 
-    public string Lastname { get; set; }
+    required public string Lastname { get; set; }
 
     public ICollection<StudentAnswer> StudentAnswers { get; set; } = new List<StudentAnswer>();
 
-    public User User { get; set; }
+    public User? User { get; set; }
 
-    public Test Test { get; set; }
+    public Test? Test { get; set; }
 
     public int TestId { get; set; }
 

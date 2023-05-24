@@ -9,7 +9,7 @@ public class Answer
 
     public int QuestionId { get; set; }
 
-    public Question Question { get; set; }
+    public Question? Question { get; set; }
 
     public ICollection<AnswerVariant> AnswerVariants { get; set; } = new List<AnswerVariant>();
 

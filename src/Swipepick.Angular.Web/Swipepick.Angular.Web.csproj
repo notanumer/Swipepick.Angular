@@ -4,7 +4,6 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
 	<ImplicitUsings>enable</ImplicitUsings>
-	<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,10 +31,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Swipepick.Angular.DataAccess\Swipepick.Angular.DataAccess.csproj" />
     <ProjectReference Include="..\Swipepick.Angular.UseCases\Swipepick.Angular.UseCases.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
   </ItemGroup>
   
 </Project>

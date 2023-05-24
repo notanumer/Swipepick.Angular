@@ -2,5 +2,7 @@
 
 public class TestDto
 {
-    public List<QuestionDto> Questions { get; init; }
+    required public string Title { get; set; }
+
+    public ICollection<QuestionDto> Questions { get; init; } = new List<QuestionDto>();
 }
