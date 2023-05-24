@@ -30,7 +30,7 @@ public class TestController : Controller
 
     [AllowAnonymous]
     [HttpGet("{uniqueCode}")]
-    public async Task<IActionResult> GetTest([FromRoute] string uniqueCode,CancellationToken cancellationToken)
+    public async Task<IActionResult> GetTest([FromRoute] string uniqueCode, CancellationToken cancellationToken)
     {
         var test = await mediator.Send(new GetTestByCodeQuery(uniqueCode), cancellationToken);
         return Json(test.Questions.OrderBy(y => Guid.NewGuid()));
@@ -38,7 +38,7 @@ public class TestController : Controller
 
     [AllowAnonymous]
     [HttpPost("submit-answers")]
-    public async Task<IActionResult> SubmitAnswers([FromBody] StudentAnswerDto studentAnswer,CancellationToken cancellationToken)
+    public async Task<IActionResult> SubmitAnswers([FromBody] StudentAnswerDto studentAnswer, CancellationToken cancellationToken)
     {
         var count = await mediator.Send(new GetTestResultCommand(studentAnswer.TestCode, studentAnswer), cancellationToken);
         await mediator.Send(new SaveTestResultQuery() { StudentAnswer = studentAnswer, TestResult = count }, cancellationToken);
