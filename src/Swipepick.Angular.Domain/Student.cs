@@ -13,8 +13,6 @@ public class Student
 
     required public string Lastname { get; set; }
 
-    public int StudentAnswerId { get; set; }
-
     public StudentAnswer? StudentAnswer { get; set; }
 
     public User? User { get; set; }
