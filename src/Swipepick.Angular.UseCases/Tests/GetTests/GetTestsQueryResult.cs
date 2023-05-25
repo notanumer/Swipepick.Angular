@@ -4,5 +4,5 @@ namespace Swipepick.Angular.UseCases.Tests.GetTests;
 
 public record GetTestsQueryResult
 {
-    public ICollection<TestDto> Tests { get; init; } = new List<TestDto>();
+    public ICollection<TestStatisticDto> Tests { get; init; } = new List<TestStatisticDto>();
 }

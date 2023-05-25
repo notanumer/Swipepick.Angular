@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Swipepick.Angular.Infrastructure.Abstractions.Exceptions;
 using Swipepick.Angular.Infrastructure.Abstractions.Interfaces;
+using Swipepick.Angular.UseCases.Tests.GetTests.Dto.Question;
 using Swipepick.Angular.UseCases.Tests.GetTests.Dto.Test;
 
 namespace Swipepick.Angular.UseCases.Tests.GetTests;
@@ -28,7 +29,7 @@ public class GetTestsQueryHandler : IRequestHandler<GetTestsQuery, GetTestsQuery
         var tests = appDbContext.Tests
             .Where(x => x.UserId == user.Id)
             .ProjectTo<TestDto>(mapper.ConfigurationProvider);
-
+        var testsStatistics = new List<TestStatisticDto>();
         foreach (var test in tests)
         {
             var testStatistic = new TestStatisticDto
@@ -38,21 +39,36 @@ public class GetTestsQueryHandler : IRequestHandler<GetTestsQuery, GetTestsQuery
                 UniqueCode = test.UniqueCode
             };
 
+            var questionsStatistics = new List<QuestionStatisticDto>();
             foreach (var question in test.Questions)
             {
                 var correctAnswer = question.Answer.CorrectAnswer;
                 var allAnswers = test.Students
                     .Select(s => s.StudentAnswer)
-                    .Where(sa => sa.QuestionId == question.Id)
                     .Count();
+                var correctAnswers = test.Students
+                    .SelectMany(s => s.StudentAnswer.Answers)
+                    .Where(sa => sa.QuestionId == question.Id && sa.Variant == correctAnswer)
+                    .Count();
+
+                var wrongAnswers = allAnswers - correctAnswers;
+                var wrongAnswersPercent = (double)wrongAnswers / allAnswers * 100;
+                var questionStatistic = new QuestionStatisticDto()
+                {
+                    QuestionId = question.Id,
+                    WrongAnswersPercent = wrongAnswersPercent,
+                    CorrectAnswersPercent = 100 - wrongAnswersPercent
+                };
+
+                questionsStatistics.Add(questionStatistic);
             }
+            testStatistic.QuestionStatistics = questionsStatistics;
+            testsStatistics.Add(testStatistic);
         }
 
         return new GetTestsQueryResult()
         {
-            Tests = await appDbContext.Tests
-            .Where(x => x.UserId == user.Id)
-            .ProjectTo<TestDto>(mapper.ConfigurationProvider).ToListAsync(cancellationToken)
+            Tests = testsStatistics
         };
     }
 }

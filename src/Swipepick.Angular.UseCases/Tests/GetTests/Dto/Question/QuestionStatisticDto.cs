@@ -4,7 +4,7 @@ public class QuestionStatisticDto
 {
     public int QuestionId { get; set; }
 
-    public int WrongAnswersPercent { get; set; }
+    public double WrongAnswersPercent { get; set; }
 
-    public int CorrectAnswersPercent { get; set; }
+    public double CorrectAnswersPercent { get; set; }
 }

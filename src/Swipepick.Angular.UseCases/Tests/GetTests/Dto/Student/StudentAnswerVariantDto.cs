@@ -5,5 +5,7 @@ public record StudentAnswerVariantDto
     public int StudentAnswerId { get; set; }
 
     public int Variant { get; set; }
+
+    public int QuestionId { get; set; }
 }
 

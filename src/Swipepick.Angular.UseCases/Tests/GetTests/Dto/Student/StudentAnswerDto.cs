@@ -3,6 +3,4 @@
 public record StudentAnswerDto
 {
     public ICollection<StudentAnswerVariantDto> Answers { get; init; } = new List<StudentAnswerVariantDto>();
-
-    public int QuestionId { get; init; }
 }
