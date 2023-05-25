@@ -19,9 +19,7 @@ public class Student
 
     public Test? Test { get; set; }
 
-    public int QuestionId { get; set; }
-
-    public Question? Question { get; set; }
+    public ICollection<Question> Questions { get; private set; } = new List<Question>();
 
     public int TestId { get; set; }
 
