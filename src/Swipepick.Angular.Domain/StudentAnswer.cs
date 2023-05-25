@@ -11,10 +11,6 @@ public class StudentAnswer
 
     public Student? Student { get; set; }
 
-    public int QuestionId { get; set; }
-
-    public Question? Question { get; set; }
-
     public ICollection<StudentAnswerVariant> Answers { get; set; } = new List<StudentAnswerVariant>();
 
 }

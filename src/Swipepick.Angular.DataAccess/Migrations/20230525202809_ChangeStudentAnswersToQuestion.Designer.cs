@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Swipepick.Angular.DataAccess;
@@ -11,9 +12,11 @@ using Swipepick.Angular.DataAccess;
 namespace Swipepick.Angular.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230525202809_ChangeStudentAnswersToQuestion")]
+    partial class ChangeStudentAnswersToQuestion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,10 +148,15 @@ namespace Swipepick.Angular.DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("StudentId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
 
                     b.HasIndex("StudentId")
                         .IsUnique();
@@ -164,9 +172,6 @@ namespace Swipepick.Angular.DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("StudentAnswerId")
                         .HasColumnType("integer");
 
@@ -174,8 +179,6 @@ namespace Swipepick.Angular.DataAccess.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("QuestionId");
 
                     b.HasIndex("StudentAnswerId");
 
@@ -323,23 +326,25 @@ namespace Swipepick.Angular.DataAccess.Migrations
 
             modelBuilder.Entity("Swipepick.Angular.Domain.StudentAnswer", b =>
                 {
+                    b.HasOne("Swipepick.Angular.Domain.Question", "Question")
+                        .WithMany("StudentAnswer")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Swipepick.Angular.Domain.Student", "Student")
                         .WithOne("StudentAnswer")
                         .HasForeignKey("Swipepick.Angular.Domain.StudentAnswer", "StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Question");
+
                     b.Navigation("Student");
                 });
 
             modelBuilder.Entity("Swipepick.Angular.Domain.StudentAnswerVariant", b =>
                 {
-                    b.HasOne("Swipepick.Angular.Domain.Question", "Question")
-                        .WithMany()
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Swipepick.Angular.Domain.StudentAnswer", "Answer")
                         .WithMany("Answers")
                         .HasForeignKey("StudentAnswerId")
@@ -347,8 +352,6 @@ namespace Swipepick.Angular.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Answer");
-
-                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("Swipepick.Angular.Domain.Test", b =>
@@ -370,6 +373,8 @@ namespace Swipepick.Angular.DataAccess.Migrations
             modelBuilder.Entity("Swipepick.Angular.Domain.Question", b =>
                 {
                     b.Navigation("Answer");
+
+                    b.Navigation("StudentAnswer");
                 });
 
             modelBuilder.Entity("Swipepick.Angular.Domain.Student", b =>

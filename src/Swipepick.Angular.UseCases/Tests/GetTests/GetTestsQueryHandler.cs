@@ -25,11 +25,34 @@ public class GetTestsQueryHandler : IRequestHandler<GetTestsQuery, GetTestsQuery
             .FirstOrDefaultAsync(u => u.Email == request.UserEmail, cancellationToken)
             ?? throw new UserNotFoundException($"User with email {request.UserEmail} not found.");
 
-        var tests = await appDbContext.Tests
+        var tests = appDbContext.Tests
             .Where(x => x.UserId == user.Id)
-            .ProjectTo<TestDto>(mapper.ConfigurationProvider)
-            .ToListAsync(cancellationToken);
+            .ProjectTo<TestDto>(mapper.ConfigurationProvider);
 
-        return new GetTestsQueryResult() { Tests = tests };
+        foreach (var test in tests)
+        {
+            var testStatistic = new TestStatisticDto
+            {
+                CreatedAt = test.CreatedAt,
+                Title = test.Title,
+                UniqueCode = test.UniqueCode
+            };
+
+            foreach (var question in test.Questions)
+            {
+                var correctAnswer = question.Answer.CorrectAnswer;
+                var allAnswers = test.Students
+                    .Select(s => s.StudentAnswer)
+                    .Where(sa => sa.QuestionId == question.Id)
+                    .Count();
+            }
+        }
+
+        return new GetTestsQueryResult()
+        {
+            Tests = await appDbContext.Tests
+            .Where(x => x.UserId == user.Id)
+            .ProjectTo<TestDto>(mapper.ConfigurationProvider).ToListAsync(cancellationToken)
+        };
     }
 }
