@@ -19,6 +19,10 @@ public class Student
 
     public Test? Test { get; set; }
 
+    public int QuestionId { get; set; }
+
+    public Question? Question { get; set; }
+
     public int TestId { get; set; }
 
     public int TestResult { get; set; }
