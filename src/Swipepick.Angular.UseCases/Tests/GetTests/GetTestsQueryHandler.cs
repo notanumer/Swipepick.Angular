@@ -2,9 +2,9 @@
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Swipepick.Angular.DomainServices;
 using Swipepick.Angular.Infrastructure.Abstractions.Exceptions;
 using Swipepick.Angular.Infrastructure.Abstractions.Interfaces;
+using Swipepick.Angular.UseCases.Tests.GetTests.Dto.Test;
 
 namespace Swipepick.Angular.UseCases.Tests.GetTests;
 

@@ -19,14 +19,14 @@ public class GetTestResultCommandHandler : IRequestHandler<GetTestResultCommand,
 
         var test = await appDbContext.Tests
             .Include(t => t.Questions)
-            .ThenInclude(q => q.Answers)
+            .ThenInclude(q => q.Answer)
             .ThenInclude(a => a.AnswerVariants)
             .FirstAsync(t => t.UniqueCode == request.TestCode, cancellationToken);
 
         var count = 0;
         var correctAnsw = test.Questions
-            .Select(x => x.Answers.First())
-            .GroupBy(x => x.QuestionId);
+            .Select(x => x.Answer)
+            .GroupBy(x => x!.QuestionId);
 
         foreach (var t in currentAnsws)
         {

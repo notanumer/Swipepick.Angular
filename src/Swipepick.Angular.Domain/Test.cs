@@ -18,4 +18,10 @@ public class Test
     public User? User { get; set; }
 
     public ICollection<Student> Students { get; set; } = new List<Student>();
+
+    public DateOnly CreatedAt { get; set; }
+
+    public DateOnly UpdatedAt { get; set; }
+
+    public DateOnly? RemovedAt { get; set; }
 }

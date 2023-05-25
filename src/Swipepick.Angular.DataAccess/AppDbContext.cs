@@ -30,8 +30,9 @@ public class AppDbContext : DbContext, IAppDbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Question>()
-            .HasMany(que => que.Answers)
-            .WithOne(answ => answ.Question);
+            .HasOne(que => que.Answer)
+            .WithOne(answ => answ.Question)
+            .HasForeignKey<Answer>(a => a.QuestionId);
 
         modelBuilder.Entity<Test>()
             .HasOne(owner => owner.User)
@@ -46,10 +47,10 @@ public class AppDbContext : DbContext, IAppDbContext
             .HasForeignKey(fk => fk.TestId);
         modelBuilder.Entity<Question>().Property(que => que.Id).ValueGeneratedOnAdd();
 
-        modelBuilder.Entity<StudentAnswer>()
-            .HasOne(b => b.Student)
-            .WithMany(c => c.StudentAnswers)
-            .HasForeignKey(g => g.StudentId);
+        modelBuilder.Entity<Student>()
+            .HasOne(b => b.StudentAnswer)
+            .WithOne(c => c.Student)
+            .HasForeignKey<StudentAnswer>(g => g.StudentId);
         modelBuilder.Entity<StudentAnswer>().Property(sa => sa.Id).ValueGeneratedOnAdd();
 
         modelBuilder.Entity<Student>()

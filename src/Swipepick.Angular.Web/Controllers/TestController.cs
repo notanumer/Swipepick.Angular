@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swipepick.Angular.DomainServices;
 using Swipepick.Angular.UseCases.Tests.CreateTest;
+using Swipepick.Angular.UseCases.Tests.DeleteTest;
 using Swipepick.Angular.UseCases.Tests.GetTestByCode;
 using Swipepick.Angular.UseCases.Tests.GetTestResult;
 using Swipepick.Angular.UseCases.Tests.GetTests;
-using Swipepick.Angular.UseCases.Tests.GetTestsUrls;
 using Swipepick.Angular.UseCases.Tests.SaveTest;
 using System.Security.Claims;
 
@@ -38,7 +38,7 @@ public class TestController : Controller
 
     [AllowAnonymous]
     [HttpPost("submit-answers")]
-    public async Task<IActionResult> SubmitAnswers([FromBody] StudentAnswerDto studentAnswer, CancellationToken cancellationToken)
+    public async Task<IActionResult> SubmitAnswers(StudentAnswerDto studentAnswer, CancellationToken cancellationToken)
     {
         var count = await mediator.Send(new GetTestResultCommand(studentAnswer.TestCode, studentAnswer), cancellationToken);
         await mediator.Send(new SaveTestResultQuery() { StudentAnswer = studentAnswer, TestResult = count }, cancellationToken);
@@ -55,11 +55,7 @@ public class TestController : Controller
     }
 
     [Authorize]
-    [HttpGet("urls")]
-    public async Task<IActionResult> GetTestsUrls(CancellationToken cancellationToken)
-    {
-        var email = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)!.Value;
-        var urls = await mediator.Send(new GetTestsUrlsQuery() { UserEmail = email }, cancellationToken);
-        return Ok(urls);
-    }
+    [HttpDelete("{uniqueCode}")]
+    public async Task DeleteTest(DeleteTestCommand command, CancellationToken cancellationToken)
+        => await mediator.Send(command, cancellationToken);
 }

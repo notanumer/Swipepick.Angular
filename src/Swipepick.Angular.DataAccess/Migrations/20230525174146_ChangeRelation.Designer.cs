@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Swipepick.Angular.DataAccess;
@@ -11,9 +12,11 @@ using Swipepick.Angular.DataAccess;
 namespace Swipepick.Angular.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230525174146_ChangeRelation")]
+    partial class ChangeRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,9 +110,6 @@ namespace Swipepick.Angular.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("StudentAnswerId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("TestId")
                         .HasColumnType("integer");
 
@@ -141,8 +141,7 @@ namespace Swipepick.Angular.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentId")
-                        .IsUnique();
+                    b.HasIndex("StudentId");
 
                     b.ToTable("StudentAnswers");
                 });
@@ -295,8 +294,8 @@ namespace Swipepick.Angular.DataAccess.Migrations
             modelBuilder.Entity("Swipepick.Angular.Domain.StudentAnswer", b =>
                 {
                     b.HasOne("Swipepick.Angular.Domain.Student", "Student")
-                        .WithOne("StudentAnswer")
-                        .HasForeignKey("Swipepick.Angular.Domain.StudentAnswer", "StudentId")
+                        .WithMany("StudentAnswers")
+                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -337,7 +336,7 @@ namespace Swipepick.Angular.DataAccess.Migrations
 
             modelBuilder.Entity("Swipepick.Angular.Domain.Student", b =>
                 {
-                    b.Navigation("StudentAnswer");
+                    b.Navigation("StudentAnswers");
                 });
 
             modelBuilder.Entity("Swipepick.Angular.Domain.StudentAnswer", b =>

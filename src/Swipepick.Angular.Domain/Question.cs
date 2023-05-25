@@ -13,5 +13,7 @@ public class Question
 
     required public string QuestionContent { get; set; }
 
-    public ICollection<Answer> Answers { get; set; } = new List<Answer>();
+    public int AnswerId { get; set; }
+
+    public Answer? Answer { get; set; }
 }

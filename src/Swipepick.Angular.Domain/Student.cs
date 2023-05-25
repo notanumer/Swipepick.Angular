@@ -13,7 +13,9 @@ public class Student
 
     required public string Lastname { get; set; }
 
-    public ICollection<StudentAnswer> StudentAnswers { get; set; } = new List<StudentAnswer>();
+    public int StudentAnswerId { get; set; }
+
+    public StudentAnswer? StudentAnswer { get; set; }
 
     public User? User { get; set; }
 

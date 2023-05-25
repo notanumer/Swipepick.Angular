@@ -1,4 +1,7 @@
-﻿namespace Swipepick.Angular.DomainServices;
+﻿using Swipepick.Angular.UseCases.Tests.GetTests.Dto.Question;
+using Swipepick.Angular.UseCases.Tests.GetTests.Dto.Student;
+
+namespace Swipepick.Angular.UseCases.Tests.GetTests.Dto.Test;
 
 public record TestDto
 {

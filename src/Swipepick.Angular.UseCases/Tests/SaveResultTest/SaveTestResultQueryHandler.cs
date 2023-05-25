@@ -30,15 +30,14 @@ internal class SaveTestResultQueryHandler : IRequestHandler<SaveTestResultQuery>
             TestResult = request.TestResult,
         };
 
-        var studentAnswers = new List<StudentAnswer>();
+        var studentAnswers = new StudentAnswer();
         foreach (var studentAnswer in request.StudentAnswer.SelectedAnswers)
         {
             var variants = request.StudentAnswer.SelectedAnswers.Select(a => new StudentAnswerVariant() { Variant = a.AnswerCode }).ToList();
-            var answer = new StudentAnswer() { Student = student, Answers = variants };
-            studentAnswers.Add(answer);
+            studentAnswers.Answers = variants;
         }
 
-        student.StudentAnswers = studentAnswers;
+        student.StudentAnswer = studentAnswers;
         appDbContext.Students.Add(student);
         await appDbContext.SaveChangesAsync(cancellationToken);
     }
