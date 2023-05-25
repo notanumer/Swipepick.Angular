@@ -16,4 +16,6 @@ public class Question
     required public string QuestionContent { get; set; }
 
     public Answer? Answer { get; set; }
+
+    public StudentAnswer? StudentAnswer { get; set; }
 }
