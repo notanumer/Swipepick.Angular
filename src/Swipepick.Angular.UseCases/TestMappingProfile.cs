@@ -9,11 +9,9 @@ public class TestMappingProfile : Profile
 	public TestMappingProfile()
 	{
         CreateMap<Test, CreateTestDto>().ReverseMap();
-        CreateMap<Test, DomainServices.TestDto>().ReverseMap();
         CreateMap<Question, DomainServices.QuestionDto>().ReverseMap();
         CreateMap<Answer, DomainServices.AnswerDto>().ReverseMap();
         CreateMap<AnswerVariant, DomainServices.AnswerVariantDto>().ReverseMap();
-        CreateMap<Student, DomainServices.StudentDto>().ReverseMap();
 
         CreateMap<Test, Tests.GetTestByCode.Dto.TestDto>().ReverseMap();
         CreateMap<Question, Tests.GetTestByCode.Dto.QuestionDto>().ReverseMap();
