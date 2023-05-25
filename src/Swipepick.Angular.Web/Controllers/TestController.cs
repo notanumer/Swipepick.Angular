@@ -47,15 +47,17 @@ public class TestController : Controller
 
     [Authorize]
     [HttpGet]
-    public async Task<IActionResult> GetTests(CancellationToken cancellationToken)
+    public async Task<GetTestsQueryResult> GetTests(CancellationToken cancellationToken)
     {
         var email = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)!.Value;
-        var tests = await mediator.Send(new GetTestsQuery(email), cancellationToken);
-        return Ok(tests);
+        return await mediator.Send(new GetTestsQuery(email), cancellationToken);
     }
 
     [Authorize]
     [HttpDelete("{uniqueCode}")]
-    public async Task DeleteTest(DeleteTestCommand command, CancellationToken cancellationToken)
-        => await mediator.Send(command, cancellationToken);
+    public async Task DeleteTest([FromRoute] string uniqueCode, CancellationToken cancellationToken)
+    {
+        var email = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)!.Value;
+        await mediator.Send(new DeleteTestCommand(email, uniqueCode), cancellationToken);
+    }
 }

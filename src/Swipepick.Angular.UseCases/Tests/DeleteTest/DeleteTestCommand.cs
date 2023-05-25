@@ -2,7 +2,4 @@
 
 namespace Swipepick.Angular.UseCases.Tests.DeleteTest;
 
-public class DeleteTestCommand : IRequest
-{
-    required public string Code { get; init; }
-}
+public record DeleteTestCommand(string UserEmail, string Code) : IRequest;

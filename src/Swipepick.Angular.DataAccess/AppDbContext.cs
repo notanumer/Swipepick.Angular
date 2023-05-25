@@ -32,25 +32,29 @@ public class AppDbContext : DbContext, IAppDbContext
         modelBuilder.Entity<Question>()
             .HasOne(que => que.Answer)
             .WithOne(answ => answ.Question)
-            .HasForeignKey<Answer>(a => a.QuestionId);
-
-        modelBuilder.Entity<Test>()
-            .HasOne(owner => owner.User)
-            .WithMany(user => user.Tests)
-            .HasForeignKey(fk => fk.UserId);
-        modelBuilder.Entity<Test>().Property(test => test.Id).ValueGeneratedOnAdd();
-        modelBuilder.Entity<Test>().HasIndex(test => test.UniqueCode).IsUnique();
-
+            .HasForeignKey<Answer>(a => a.QuestionId)
+            .OnDelete(DeleteBehavior.Cascade);
         modelBuilder.Entity<Question>()
             .HasOne(b => b.Test)
             .WithMany(c => c.Questions)
             .HasForeignKey(fk => fk.TestId);
         modelBuilder.Entity<Question>().Property(que => que.Id).ValueGeneratedOnAdd();
 
+        modelBuilder.Entity<Test>()
+            .HasOne(owner => owner.User)
+            .WithMany(user => user.Tests)
+            .HasForeignKey(fk => fk.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<Test>().Property(test => test.Id).ValueGeneratedOnAdd();
+        modelBuilder.Entity<Test>().HasIndex(test => test.UniqueCode).IsUnique();
+
+        
+
         modelBuilder.Entity<Student>()
             .HasOne(b => b.StudentAnswer)
             .WithOne(c => c.Student)
-            .HasForeignKey<StudentAnswer>(g => g.StudentId);
+            .HasForeignKey<StudentAnswer>(g => g.StudentId)
+            .OnDelete(DeleteBehavior.Cascade);
         modelBuilder.Entity<StudentAnswer>().Property(sa => sa.Id).ValueGeneratedOnAdd();
 
         modelBuilder.Entity<Student>()
@@ -68,6 +72,7 @@ public class AppDbContext : DbContext, IAppDbContext
 
         modelBuilder.Entity<Answer>()
             .HasMany(a => a.AnswerVariants)
-            .WithOne(v => v.Answer);
+            .WithOne(v => v.Answer)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

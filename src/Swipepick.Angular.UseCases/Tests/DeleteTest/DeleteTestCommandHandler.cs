@@ -16,8 +16,12 @@ internal class DeleteTestCommandHandler : IRequestHandler<DeleteTestCommand>
 
     public async Task Handle(DeleteTestCommand request, CancellationToken cancellationToken)
     {
+        var user = await appDbContext.Users
+            .FirstOrDefaultAsync(u => u.Email == request.UserEmail, cancellationToken)
+            ?? throw new UserNotFoundException("User not found.");
+
         var test = await appDbContext.Tests
-            .FirstOrDefaultAsync(t => t.UniqueCode == request.Code, cancellationToken)
+            .FirstOrDefaultAsync(t => t.UniqueCode == request.Code && t.UserId == user.Id, cancellationToken)
             ?? throw new TestNotFoundException($"Test with code {request.Code} not found");
 
         appDbContext.Tests.Remove(test);
