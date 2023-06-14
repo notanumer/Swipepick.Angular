@@ -72,7 +72,7 @@ public class TestController : Controller
     }
 
     [Authorize]
-    [HttpGet("students-statistic/{uniqueCode}")]
+    [HttpGet("test-statistic/{uniqueCode}")]
     public async Task<GetStudentStatisticResult> GetStudentStatistic([FromRoute] string uniqueCode, CancellationToken cancellationToken)
     {
         return await mediator.Send(new GetStudentStatisticQuery(uniqueCode), cancellationToken);
