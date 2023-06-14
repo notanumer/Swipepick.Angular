@@ -10,5 +10,7 @@ public class TestStatisticDto
 
     required public DateOnly CreatedAt { get; init; }
 
+    public double CorrectAnswersPercent { get; set; }
+
     public ICollection<QuestionStatisticDto> QuestionStatistics { get; set; } = new List<QuestionStatisticDto>();
 }

@@ -21,5 +21,7 @@ namespace Swipepick.Angular.Domain
         public int QuestionId { get; set; }
 
         public int Variant { get; set; }
+
+        required public string AnswerContent { get; set; }
     }
 }

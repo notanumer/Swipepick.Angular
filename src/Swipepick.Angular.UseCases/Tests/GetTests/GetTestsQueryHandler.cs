@@ -46,6 +46,10 @@ public class GetTestsQueryHandler : IRequestHandler<GetTestsQuery, GetTestsQuery
             };
 
             testStatistic.QuestionStatistics = statisticService.GetQuestionsStatistics(test);
+            var correctAnswSum = testStatistic.QuestionStatistics.Sum(x => x.CorrectAnswersPercent);
+            var questionCount = test.Questions.Count;
+            var correctAnswerAvg = correctAnswSum / questionCount;
+            testStatistic.CorrectAnswersPercent = correctAnswerAvg;
             testsStatistics.Add(testStatistic);
         }
 

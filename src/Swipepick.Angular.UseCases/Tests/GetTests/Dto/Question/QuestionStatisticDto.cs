@@ -13,4 +13,8 @@ public class QuestionStatisticDto
     required public string QuestionContent { get; set; }
 
     public AnswerStatisticDto AnswerStatistic { get; set; }
+
+    public int CorrectAnswersCount { get; set; }
+
+    public int CorrectAnswer { get; set; }
 }

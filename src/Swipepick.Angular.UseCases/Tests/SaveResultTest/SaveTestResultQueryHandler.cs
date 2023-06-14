@@ -39,7 +39,12 @@ internal class SaveTestResultQueryHandler : IRequestHandler<SaveTestResultQuery>
             student.Questions.Add(question);
 
             var variants = request.StudentAnswer.SelectedAnswers
-                .Select(a => new StudentAnswerVariant() { Variant = a.AnswerCode, QuestionId = a.QuestionId })
+                .Select(a => new StudentAnswerVariant() 
+                {
+                    Variant = a.AnswerCode, 
+                    QuestionId = a.QuestionId,
+                    AnswerContent = a.AnswerContent
+                })
                 .ToList();
             studentAnswer.Answers = variants;
         }

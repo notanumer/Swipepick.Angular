@@ -7,5 +7,7 @@ public record StudentAnswerVariantDto
     public int Variant { get; set; }
 
     public int QuestionId { get; set; }
+
+    required public string AnswerContent { get; set; }
 }
 

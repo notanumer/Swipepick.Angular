@@ -1,4 +1,5 @@
-﻿using Swipepick.Angular.UseCases.Tests.GetTests.Dto.Question;
+﻿using Swipepick.Angular.UseCases.Tests.GetTests.Dto.Answer;
+using Swipepick.Angular.UseCases.Tests.GetTests.Dto.Question;
 using Swipepick.Angular.UseCases.Tests.GetTests.Dto.Test;
 
 namespace Swipepick.Angular.UseCases.Tests.GetTests;
@@ -13,8 +14,6 @@ public class TestsStatisticService
                 .Select(s => s.StudentAnswer)
                 .Count();
 
-        var t = GetAnswerStatistic(test);
-
         foreach (var question in test.Questions)
         {
             var questionAnswers = question.Answer.AnswerVariants;
@@ -28,7 +27,9 @@ public class TestsStatisticService
                     QuestionId = question.Id,
                     WrongAnswersPercent = 0,
                     CorrectAnswersPercent = 0,
-                    QuestionContent = question.QuestionContent
+                    QuestionContent = question.QuestionContent,
+                    CorrectAnswer = correctAnswer,
+                    CorrectAnswersCount = 0
                 });
 
                 continue;
@@ -39,8 +40,7 @@ public class TestsStatisticService
                 .Where(sa => sa.QuestionId == question.Id && sa.Variant == correctAnswer)
                 .Count();
 
-            var answerStatistic = new AnswerStatisticDto();
-            
+            var answerStatistic = GetAnswerStatistic(test, question);
 
             var wrongAnswers = allAnswersCount - correctAnswers;
             var wrongAnswersPercent = Math.Round((double)wrongAnswers / allAnswersCount * 100);
@@ -50,7 +50,9 @@ public class TestsStatisticService
                 WrongAnswersPercent = wrongAnswersPercent,
                 CorrectAnswersPercent = 100 - wrongAnswersPercent,
                 QuestionContent = question.QuestionContent,
-                AnswerStatistic = answerStatistic
+                AnswerStatistic = answerStatistic,
+                CorrectAnswersCount = correctAnswers,
+                CorrectAnswer = correctAnswer
             };
 
             questionsStatistics.Add(questionStatistic);
@@ -59,23 +61,42 @@ public class TestsStatisticService
         return questionsStatistics;
     }
 
-    private AnswerStatisticDto GetAnswerStatistic(TestDto test)
+    private AnswerStatisticDto GetAnswerStatistic(TestDto test, QuestionDto question)
     {
-        var answersByQuestions = test.Students
+        var studentAnswersByQuestions = test.Students
             .SelectMany(x => x.StudentAnswer.Answers)
             .GroupBy(y => y.QuestionId)
             .ToDictionary(k => k.Key);
 
-        var variantsByQuestions = new Dictionary<int, List<string>>();
-        foreach (var question in test.Questions)
+        var answersStatistic = new AnswerStatisticDto();
+        var variantsCounts = new Dictionary<string, int>();
+        var studentAnswersGroup = studentAnswersByQuestions[question.Id];
+        var studentsAnswersCount = studentAnswersGroup.Count();
+        foreach (var answer in question.Answer.AnswerVariants)
         {
-            var questionContent = question.Id;
-            var variants = question.Answer.AnswerVariants.Select(x => x.Variant).ToList();
-            variantsByQuestions.Add(questionContent, variants);
+            variantsCounts.Add(answer.Variant, 0);
+            foreach (var studentAnswer in studentAnswersGroup)
+            {
+                if (answer.Variant == studentAnswer.AnswerContent)
+                {
+                    variantsCounts[answer.Variant]++;
+                }
+            }
         }
 
-        var answerStatistic = new AnswerStatisticDto();
-        return answerStatistic;
-        
+        foreach (var key in variantsCounts.Keys)
+        {
+            if (variantsCounts[key] == 0)
+            {
+                answersStatistic.AnswerVariants.Add(new AnswerVariantStatisticDto(key, 0));
+                continue;
+            }
+            var answerPercent = Math.Round((double)variantsCounts[key] / studentsAnswersCount * 100);
+            var answerStatisticDto = new AnswerVariantStatisticDto(key, answerPercent);
+            answersStatistic.AnswerVariants.Add(answerStatisticDto);
+        }
+
+        return answersStatistic;
+
     }
 }
