@@ -2,4 +2,4 @@
 
 namespace Swipepick.Angular.UseCases.Tests.GetStudentStatistic;
 
-public record GetStudentStatisticQuery(string TestCode) : IRequest<IEnumerable<GetStudentStatisticDto>>;
+public record GetStudentStatisticQuery(string TestCode) : IRequest<GetStudentStatisticResult>;

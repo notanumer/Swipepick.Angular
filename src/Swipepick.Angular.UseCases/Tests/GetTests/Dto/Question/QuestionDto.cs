@@ -9,4 +9,6 @@ public record QuestionDto
     required public string QuestionContent { get; init; }
 
     required public AnswerDto Answer { get; init; }
+
+    required public string CorrectAnswerContent { get; init; }
 }

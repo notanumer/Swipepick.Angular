@@ -44,6 +44,8 @@ public class TestsStatisticService
 
             var wrongAnswers = allAnswersCount - correctAnswers;
             var wrongAnswersPercent = Math.Round((double)wrongAnswers / allAnswersCount * 100);
+            var correctVariant = new AnswerVariantDto(question.CorrectAnswerContent);
+            var correctAnswerIndex = Array.IndexOf(question.Answer.AnswerVariants.ToArray(), correctVariant);
             var questionStatistic = new QuestionStatisticDto()
             {
                 QuestionId = question.Id,
@@ -52,7 +54,7 @@ public class TestsStatisticService
                 QuestionContent = question.QuestionContent,
                 AnswerStatistic = answerStatistic,
                 CorrectAnswersCount = correctAnswers,
-                CorrectAnswer = correctAnswer
+                CorrectAnswer = correctAnswerIndex
             };
 
             questionsStatistics.Add(questionStatistic);

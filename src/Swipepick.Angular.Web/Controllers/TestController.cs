@@ -64,7 +64,7 @@ public class TestController : Controller
 
     [Authorize]
     [HttpGet("students-statistic/{uniqueCode}")]
-    public async Task<IEnumerable<GetStudentStatisticDto>> GetStudentStatistic([FromRoute] string uniqueCode, CancellationToken cancellationToken)
+    public async Task<GetStudentStatisticResult> GetStudentStatistic([FromRoute] string uniqueCode, CancellationToken cancellationToken)
     {
         return await mediator.Send(new GetStudentStatisticQuery(uniqueCode), cancellationToken);
     }

@@ -1,4 +1,6 @@
-﻿namespace Swipepick.Angular.UseCases.Tests.GetStudentStatistic;
+﻿using Swipepick.Angular.UseCases.Tests.GetTests;
+
+namespace Swipepick.Angular.UseCases.Tests.GetStudentStatistic;
 
 public class GetStudentStatisticDto
 {
