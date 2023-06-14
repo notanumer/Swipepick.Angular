@@ -24,4 +24,6 @@ public class Student
     public int TestId { get; set; }
 
     public int TestResult { get; set; }
+
+    public DateTime CreatedAt { get; set; }
 }

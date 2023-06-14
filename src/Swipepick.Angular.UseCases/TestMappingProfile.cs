@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Swipepick.Angular.Domain;
 using Swipepick.Angular.UseCases.Tests.CreateTest;
+using Swipepick.Angular.UseCases.Tests.GetStudentStatistic;
 
 namespace Swipepick.Angular.UseCases;
 
@@ -29,6 +30,10 @@ public class TestMappingProfile : Profile
         CreateMap<Answer, Tests.GetTests.Dto.Answer.AnswerDto>().ReverseMap();
 		CreateMap<AnswerVariant, Tests.GetTests.Dto.Answer.AnswerVariantDto>().ReverseMap();
 
-        
+        CreateMap<StudentAnswer, GetStudentStatisticAnswerDto>().ReverseMap();
+        CreateMap<StudentAnswerVariant, GetStudentStatisticAnswerVariantDto>()
+            .ForMember(src => src.IsCorrect, dest => dest.Ignore())
+            .ReverseMap();
+        CreateMap<Student, GetStudentStatisticDto>().ReverseMap();
     }
 }

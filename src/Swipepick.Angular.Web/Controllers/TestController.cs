@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Swipepick.Angular.DomainServices;
 using Swipepick.Angular.UseCases.Tests.CreateTest;
 using Swipepick.Angular.UseCases.Tests.DeleteTest;
+using Swipepick.Angular.UseCases.Tests.GetStudentStatistic;
 using Swipepick.Angular.UseCases.Tests.GetTestByCode;
 using Swipepick.Angular.UseCases.Tests.GetTestResult;
 using Swipepick.Angular.UseCases.Tests.GetTests;
@@ -59,5 +60,12 @@ public class TestController : Controller
     {
         var email = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)!.Value;
         await mediator.Send(new DeleteTestCommand(email, uniqueCode), cancellationToken);
+    }
+
+    [Authorize]
+    [HttpGet("students-statistic/{uniqueCode}")]
+    public async Task<IEnumerable<GetStudentStatisticDto>> GetStudentStatistic([FromRoute] string uniqueCode, CancellationToken cancellationToken)
+    {
+        return await mediator.Send(new GetStudentStatisticQuery(uniqueCode), cancellationToken);
     }
 }

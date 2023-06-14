@@ -24,6 +24,11 @@ public class CreateTestCommandHandler : IRequestHandler<CreateTestCommand, strin
         if (user != null)
         {
             var test = mapper.Map<Test>(request.TestDto);
+            foreach (var question in test.Questions)
+            {
+                question.CorrectAnswerContent = question.Answer.AnswerVariants
+                    .ToList()[question.Answer.CorrectAnswer].Variant;
+            }
             test.UniqueCode = Guid.NewGuid().ToString().Split("-")[0];
             test.UserId = user.Id;
             test.CreatedAt = DateOnly.FromDateTime(DateTime.UtcNow);
