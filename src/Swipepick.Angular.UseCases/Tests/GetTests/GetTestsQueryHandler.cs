@@ -4,7 +4,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Swipepick.Angular.Infrastructure.Abstractions.Exceptions;
 using Swipepick.Angular.Infrastructure.Abstractions.Interfaces;
-using Swipepick.Angular.UseCases.Tests.GetTests.Dto.Question;
 using Swipepick.Angular.UseCases.Tests.GetTests.Dto.Test;
 
 namespace Swipepick.Angular.UseCases.Tests.GetTests;
@@ -30,9 +29,9 @@ public class GetTestsQueryHandler : IRequestHandler<GetTestsQuery, GetTestsQuery
         var user = await appDbContext.Users
             .FirstOrDefaultAsync(u => u.Email == request.UserEmail, cancellationToken)
             ?? throw new UserNotFoundException($"User with email {request.UserEmail} not found.");
-
         var tests = appDbContext.Tests
             .Where(x => x.UserId == user.Id)
+            .Where(x => x.IsSurvey == false)
             .ProjectTo<TestDto>(mapper.ConfigurationProvider);
 
         var testsStatistics = new List<TestStatisticDto>();

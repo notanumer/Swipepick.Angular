@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swipepick.Angular.DomainServices;
+using Swipepick.Angular.UseCases.Survey;
 using Swipepick.Angular.UseCases.Tests.CreateTest;
 using Swipepick.Angular.UseCases.Tests.DeleteTest;
 using Swipepick.Angular.UseCases.Tests.GetStudentStatistic;
@@ -52,6 +53,14 @@ public class TestController : Controller
     {
         var email = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)!.Value;
         return await mediator.Send(new GetTestsQuery(email), cancellationToken);
+    }
+
+    [Authorize]
+    [HttpGet("surveys")]
+    public async Task<GetSurveysQueryResult> GetSurveys(CancellationToken cancellationToken)
+    {
+        var email = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)!.Value;
+        return await mediator.Send(new GetSurveysQuery(email), cancellationToken);
     }
 
     [Authorize]

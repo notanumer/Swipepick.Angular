@@ -63,7 +63,7 @@ public class TestsStatisticService
         return questionsStatistics;
     }
 
-    private AnswerStatisticDto GetAnswerStatistic(TestDto test, QuestionDto question)
+    public AnswerStatisticDto GetAnswerStatistic(TestDto test, QuestionDto question)
     {
         var studentAnswersByQuestions = test.Students
             .SelectMany(x => x.StudentAnswer.Answers)
