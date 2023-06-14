@@ -13,11 +13,16 @@ public class GetTestsQueryHandler : IRequestHandler<GetTestsQuery, GetTestsQuery
 {
     private readonly IAppDbContext appDbContext;
     private readonly IMapper mapper;
+    private readonly TestsStatisticService statisticService;
 
-    public GetTestsQueryHandler(IAppDbContext appDbContext, IMapper mapper)
+    public GetTestsQueryHandler(
+        IAppDbContext appDbContext,
+        IMapper mapper,
+        TestsStatisticService statisticService)
     {
         this.appDbContext = appDbContext;
         this.mapper = mapper;
+        this.statisticService = statisticService;
     }
 
     public async Task<GetTestsQueryResult> Handle(GetTestsQuery request, CancellationToken cancellationToken)
@@ -29,6 +34,7 @@ public class GetTestsQueryHandler : IRequestHandler<GetTestsQuery, GetTestsQuery
         var tests = appDbContext.Tests
             .Where(x => x.UserId == user.Id)
             .ProjectTo<TestDto>(mapper.ConfigurationProvider);
+
         var testsStatistics = new List<TestStatisticDto>();
         foreach (var test in tests)
         {
@@ -39,30 +45,7 @@ public class GetTestsQueryHandler : IRequestHandler<GetTestsQuery, GetTestsQuery
                 UniqueCode = test.UniqueCode
             };
 
-            var questionsStatistics = new List<QuestionStatisticDto>();
-            foreach (var question in test.Questions)
-            {
-                var correctAnswer = question.Answer.CorrectAnswer;
-                var allAnswers = test.Students
-                    .Select(s => s.StudentAnswer)
-                    .Count();
-                var correctAnswers = test.Students
-                    .SelectMany(s => s.StudentAnswer.Answers)
-                    .Where(sa => sa.QuestionId == question.Id && sa.Variant == correctAnswer)
-                    .Count();
-
-                var wrongAnswers = allAnswers - correctAnswers;
-                var wrongAnswersPercent = (double)wrongAnswers / allAnswers * 100;
-                var questionStatistic = new QuestionStatisticDto()
-                {
-                    QuestionId = question.Id,
-                    WrongAnswersPercent = wrongAnswersPercent,
-                    CorrectAnswersPercent = 100 - wrongAnswersPercent
-                };
-
-                questionsStatistics.Add(questionStatistic);
-            }
-            testStatistic.QuestionStatistics = questionsStatistics;
+            testStatistic.QuestionStatistics = statisticService.GetQuestionsStatistics(test);
             testsStatistics.Add(testStatistic);
         }
 

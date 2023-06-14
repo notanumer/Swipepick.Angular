@@ -15,7 +15,7 @@ public class GetTestResultCommandHandler : IRequestHandler<GetTestResultCommand,
 
     public async Task<int> Handle(GetTestResultCommand request, CancellationToken cancellationToken)
     {
-        var currentAnsws = request.StudentAnswer.SelectedAnswers.GroupBy(x => x.QuestionId);
+        var selectedAnswersByQuestionGroups = request.StudentAnswer.SelectedAnswers.GroupBy(x => x.QuestionId);
 
         var test = await appDbContext.Tests
             .Include(t => t.Questions)
@@ -24,17 +24,17 @@ public class GetTestResultCommandHandler : IRequestHandler<GetTestResultCommand,
             .FirstAsync(t => t.UniqueCode == request.TestCode, cancellationToken);
 
         var count = 0;
-        var correctAnsw = test.Questions
+        var answersByQuestionGroups = test.Questions
             .Select(x => x.Answer)
             .GroupBy(x => x!.QuestionId);
 
-        foreach (var t in currentAnsws)
+        foreach (var slectedAnswers in selectedAnswersByQuestionGroups)
         {
-            var group = correctAnsw.Single(g => g.Key == t.Key);
-            var y = currentAnsws.Single(g => g.Key == t.Key);
-            var currentAns = y.Select(x => x).First();
-            var tight = group.Select(x => x).First();
-            if (tight.CorrectAnswer == currentAns.AnswerCode)
+            var answersByQuestion = answersByQuestionGroups.Single(g => g.Key == slectedAnswers.Key);
+            var selectedAnswersByQuestion = selectedAnswersByQuestionGroups.Single(g => g.Key == slectedAnswers.Key);
+            var currentAnswer = selectedAnswersByQuestion.Select(x => x).First();
+            var rightAnswer = answersByQuestion.Select(x => x).First();
+            if (rightAnswer.CorrectAnswer == currentAnswer.AnswerCode)
             {
                 count++;
             }

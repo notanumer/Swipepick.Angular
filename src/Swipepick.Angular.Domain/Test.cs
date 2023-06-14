@@ -24,4 +24,6 @@ public class Test
     public DateOnly UpdatedAt { get; set; }
 
     public DateOnly? RemovedAt { get; set; }
+
+    public bool IsSurvey { get; set; }
 }

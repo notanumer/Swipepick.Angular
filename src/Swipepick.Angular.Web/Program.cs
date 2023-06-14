@@ -32,6 +32,9 @@ builder.Services.AddScoped<IAppDbContext, AppDbContext>();
 // Controllers.
 builder.Services.AddControllers();
 
+// Oher dependencies.
+ApplicationModule.Register(builder.Services);
+
 var app = builder.Build();
 
 app.UseSwagger();

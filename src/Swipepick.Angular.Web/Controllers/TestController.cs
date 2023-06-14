@@ -41,7 +41,7 @@ public class TestController : Controller
     public async Task<IActionResult> SubmitAnswers(StudentAnswerDto studentAnswer, CancellationToken cancellationToken)
     {
         var count = await mediator.Send(new GetTestResultCommand(studentAnswer.TestCode, studentAnswer), cancellationToken);
-        await mediator.Send(new SaveTestResultQuery() { StudentAnswer = studentAnswer, TestResult = count }, cancellationToken);
+        await mediator.Send(new SaveTestResultQuery { StudentAnswer = studentAnswer, TestResult = count }, cancellationToken);
         return Ok(count);
     }
 

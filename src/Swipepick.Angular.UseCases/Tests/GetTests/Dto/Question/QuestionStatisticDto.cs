@@ -1,4 +1,6 @@
-﻿namespace Swipepick.Angular.UseCases.Tests.GetTests.Dto.Question;
+﻿using Swipepick.Angular.UseCases.Tests.GetTests.Dto.Answer;
+
+namespace Swipepick.Angular.UseCases.Tests.GetTests.Dto.Question;
 
 public class QuestionStatisticDto
 {
@@ -7,4 +9,8 @@ public class QuestionStatisticDto
     public double WrongAnswersPercent { get; set; }
 
     public double CorrectAnswersPercent { get; set; }
+
+    required public string QuestionContent { get; set; }
+
+    public AnswerStatisticDto AnswerStatistic { get; set; }
 }
